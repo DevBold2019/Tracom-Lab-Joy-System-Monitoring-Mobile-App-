@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:padding="10dp"
+    android:layout_gravity="center"
+    android:background="@color/colorPrimaryDark"
+    android:layout_height="300dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="BankName"
+        android:id="@+id/dialogBankName"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="SerialNumber"
+        android:id="@+id/dialogSerialNo"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="PartNumber"
+        android:id="@+id/dialogPartNo"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
+        android:layout_margin="10dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/dialogsavebtn"
+        android:text="Save"/>
+
+</LinearLayout>
