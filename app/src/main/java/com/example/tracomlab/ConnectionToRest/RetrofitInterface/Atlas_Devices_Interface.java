@@ -12,4 +12,7 @@ public interface Atlas_Devices_Interface {
 
     @GET("/list/atlasDevive")
     Call<List<Atlas_Devices>> getFullList();
+
+    @GET("/list/atlasDevive")
+    Call<List<Atlas_Devices>> getListWithPaging();
 }
