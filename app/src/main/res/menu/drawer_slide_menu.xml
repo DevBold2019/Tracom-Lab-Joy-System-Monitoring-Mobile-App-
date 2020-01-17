@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Dashboard"
+        android:icon="@drawable/combochartpx"
+        android:id="@+id/dashMenu"/>
+
+    <item
+        android:title="Repairs"
+        android:icon="@drawable/maintenancepx"
+        android:id="@+id/repairMenu"/>
+
+    <item
+        android:title="Orders"
+        android:icon="@drawable/orderhistorypx"
+        android:id="@+id/orderMenu"/>
+
+    <item
+        android:title="Delivery"
+        android:icon="@drawable/deliverypx"
+        android:id="@+id/deliveryMenu"/>
+
+    <item
+        android:title="Contact"
+        android:icon="@drawable/consultationpx"
+        android:id="@+id/consultationMenu"/>
+
+    <item
+        android:title="Onboarding"
+        android:id="@+id/onBoardedDevicesMenu">
+
+        <menu>
+
+            <item
+                android:title="Customer"
+                android:icon="@drawable/customerpx"
+                android:id="@+id/customerOnBoardedDeviceMenu"/>
+            <item
+                android:title="Manufacturer"
+                android:icon="@drawable/manufacturingpx"
+                android:id="@+id/manufacturerOnBoardedDeviceMenu"/>
+            <item
+                android:title="Devices"
+                android:icon="@drawable/posterminal"
+                android:id="@+id/devicesOnBoardedDeviceMenu"/>
+
+
+        </menu>
+    </item>
+
+
+    <item
+        android:title="Reports" >
+        <menu>
+            <item
+                android:title="Device Report"
+                android:icon="@drawable/businesseport"/>
+            <item
+                android:title="Device history"
+                android:icon="@drawable/activityhistory" />
+        </menu>
+    </item>
+
+
+    <item
+        android:title="Inventory Management">
+        <menu>
+            <item
+                android:title="Inventory Reports"
+                android:id="@+id/inventoryReportsMenu"
+                android:icon="@drawable/ininventory" />
+            <item
+                android:title="Parts History"
+                android:icon="@drawable/activityhistory" />
+
+        </menu>
+    </item>
+
+
+
+</menu>
