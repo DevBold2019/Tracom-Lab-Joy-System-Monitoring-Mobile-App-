@@ -18,6 +18,10 @@ public class Devices_Model {
         DateCreated = dateCreated;
     }
 
+    public Devices_Model() {
+
+    }
+
 
     public String getSerialNumber() {
         return SerialNumber;

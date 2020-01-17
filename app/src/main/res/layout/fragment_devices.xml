@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="60dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.DevicesFragment">
+    android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/main_swiperefresh"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/devicesRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/devicesRecycler"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/activity_margin_content"
+            android:paddingBottom="@dimen/activity_margin_content"/>
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 
+    <ProgressBar
+        android:id="@+id/main_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
-    </androidx.core.widget.NestedScrollView>
+    <include layout="@layout/error_layout"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

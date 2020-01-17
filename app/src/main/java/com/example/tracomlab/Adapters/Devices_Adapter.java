@@ -21,6 +21,9 @@ public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewho
 
     List<Devices_Model> modelList;
     Context context;
+    private boolean isLoadingAdded = false;
+    private static final int ITEM = 0;
+    private static final int LOADING = 1;
 
 
     public Devices_Adapter(List<Devices_Model> modelList, Context context) {
@@ -105,6 +108,52 @@ public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewho
             linearLayout = itemView.findViewById(R.id.moreDeviceDetails);
 
         }
+    }
+
+
+    public void add(Devices_Model model) {
+        modelList.add(model);
+        notifyItemInserted(modelList.size() - 1);
+    }
+
+    public void addAll(List<Devices_Model> mcList) {
+        for (Devices_Model mc : mcList) {
+            add(mc);
+        }
+    }
+
+
+   /* public void clear() {
+        isLoadingAdded = false;
+        while (getItemCount() > 0) {
+            remove(getItem(0));
+        }
+    }*/
+
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
+
+
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+        add(new Devices_Model());
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
+
+        int position = modelList.size() - 1;
+        Devices_Model item = getItem(position);
+
+        if (item != null) {
+            modelList.remove(position);
+            notifyItemRemoved(position);
+        }
+    }
+
+    public Devices_Model getItem(int position) {
+        return modelList.get(position);
     }
 
 
