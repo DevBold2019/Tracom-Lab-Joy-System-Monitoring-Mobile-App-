@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@drawable/rounded_button"
-                        android:onClick="NavigateMainInterface"
+                        android:onClick="NavigateToMainInterface"
                         android:text="Sign In"
                         android:textColor="@color/colorBackground" />
 

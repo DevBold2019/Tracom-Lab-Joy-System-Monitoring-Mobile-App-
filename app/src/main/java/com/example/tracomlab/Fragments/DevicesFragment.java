@@ -132,7 +132,7 @@ public class DevicesFragment extends Fragment {
          return true;
 
         }
-        linearLayout.setVisibility(View.VISIBLE);
+        linearLayout.setVisibility(View.GONE);
         return false;
 
 
