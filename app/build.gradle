@@ -24,6 +24,9 @@ android {
     }
 }
 
+//version
+def paging_version = "2.1.1"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -49,6 +52,9 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Dexter for requesting run-time permissions where needed
     implementation 'com.karumi:dexter:6.0.1'
+
+    //Paging dependency
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
 
 }

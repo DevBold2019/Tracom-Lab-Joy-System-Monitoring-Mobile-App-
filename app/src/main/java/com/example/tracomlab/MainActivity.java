@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.KeyguardManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -36,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
     RadioButton RememberMeKidole;
     RadioButton RememberMe;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        progressDialog= new ProgressDialog(this);
+        progressDialog.setTitle("Login In Progress");
+        progressDialog.setMessage("Wait a while");
 
         RememberMeKidole = findViewById(R.id.RememberMeKidole);
         //*check if the Kidole Option will be applicable*//
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void NavigateMainInterface(View view) {
+    public void NavigateToMainInterface(View view) {
 
         final TextInputEditText login_email_edt = findViewById(R.id.login_email_edt);
         final TextInputEditText login_pass_edt = findViewById(R.id.login_pass_edt);
@@ -76,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
 
         String getMail = login_email_edt.getText().toString();
         String getPass = login_pass_edt.getText().toString();
+
+        if (login_email_edt.getText().toString().trim().isEmpty() || login_pass_edt.getText().toString().trim().isEmpty() ){
+
+            Toast.makeText(getApplicationContext(),"Cant Login with null values",Toast.LENGTH_LONG).show();
+
+            login_email_edt.setError("Required");
+            login_pass_edt.setError("Required");
+
+            return;
+        }
+
+        progressDialog.show();
 
         Ufs_Authentication_Interface ufsAuthenticationInterface = ServiceGenerator.createService(Ufs_Authentication_Interface.class, "captain", "edins");
 
@@ -104,21 +123,27 @@ public class MainActivity extends AppCompatActivity {
                     if (RememberMe.isChecked()) {
 
                         //*enabling remember me password*//
+
                         getSharedPreferences("TracomLabcom", Context.MODE_PRIVATE)
                                 .edit()
                                 .putString("username", textToSaveEmail)
                                 .putString("password", textToSavePassword)
                                 .apply();
+
                         //*enabling remember me password*//
 
                         //*storing the username*//
                         try {
+
                             FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
                             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
                             outputWriter.write("no");
                             outputWriter.close();
+
                         } catch (Exception e) {
+
                             e.printStackTrace();
+
                         }
                         //*storing the username*//
 
@@ -163,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     //*open the application*//
                 } else {
+
                     Toast.makeText(getApplication(), "" + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -170,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Ufs_Authentication_Model> call, Throwable t) {
                 Toast.makeText(getApplication(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                progressDialog.setMessage("Network error\n Please check your network");
+
             }
         });
     }
