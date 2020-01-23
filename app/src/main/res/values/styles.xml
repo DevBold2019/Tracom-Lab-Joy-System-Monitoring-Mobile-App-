@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorWhite</item>
     </style>
 
+
+    <style name="CustomAlertDialogStyle">
+    <item name="android:background">@color/colorBackground</item>
+    </style>
+
+   <!-- progressBar Theme-->
+    <style name="progressBarBlue" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/colorBackground</item>
+    </style>
+
 </resources>

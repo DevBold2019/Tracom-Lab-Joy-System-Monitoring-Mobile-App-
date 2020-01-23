@@ -80,9 +80,11 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     //*retrieve the status*//
                 }else{
+
                     Intent intent=new Intent(getApplication(),MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
             }
         },timeout);

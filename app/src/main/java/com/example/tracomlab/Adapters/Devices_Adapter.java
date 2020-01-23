@@ -15,22 +15,23 @@ import com.bumptech.glide.Glide;
 import com.example.tracomlab.Model_Classes.Devices_Model;
 import com.example.tracomlab.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewholder> {
 
-    List<Devices_Model> modelList;
+    List<Devices_Model> modelList= new ArrayList<>();
     Context context;
     private boolean isLoadingAdded = false;
     private static final int ITEM = 0;
     private static final int LOADING = 1;
 
 
-    public Devices_Adapter(List<Devices_Model> modelList, Context context) {
+  /*  public Devices_Adapter(List<Devices_Model> modelList, Context context) {
 
         this.modelList = modelList;
         this.context = context;
-    }
+    }*/
 
     @NonNull
     @Override
@@ -51,14 +52,14 @@ public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewho
         Devices_Model model = modelList.get(position);
 
         holder.part.setText(model.getPartNumber());
-        holder.date.setText(model.getDateCreated());
+        //holder.date.setText(model.getDateCreated());
         holder.model.setText(model.getModel());
         holder.serial.setText(model.getSerialNumber());
         holder.owner.setText(model.getDeviceOwner());
 
-        Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
+        //Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+       /* holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -76,7 +77,7 @@ public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewho
 
 
             }
-        });
+        });*/
 
 
     }
@@ -110,52 +111,11 @@ public class Devices_Adapter extends RecyclerView.Adapter<Devices_Adapter.viewho
         }
     }
 
-
-    public void add(Devices_Model model) {
-        modelList.add(model);
-        notifyItemInserted(modelList.size() - 1);
+    public void add(List<Devices_Model> modelist) {
+       this.modelList=modelist;
+       // notifyItemInserted(modelList.size() - 1);
+        notifyDataSetChanged();
     }
-
-    public void addAll(List<Devices_Model> mcList) {
-        for (Devices_Model mc : mcList) {
-            add(mc);
-        }
-    }
-
-
-   /* public void clear() {
-        isLoadingAdded = false;
-        while (getItemCount() > 0) {
-            remove(getItem(0));
-        }
-    }*/
-
-    public boolean isEmpty() {
-        return getItemCount() == 0;
-    }
-
-
-    public void addLoadingFooter() {
-        isLoadingAdded = true;
-        add(new Devices_Model());
-    }
-
-    public void removeLoadingFooter() {
-        isLoadingAdded = false;
-
-        int position = modelList.size() - 1;
-        Devices_Model item = getItem(position);
-
-        if (item != null) {
-            modelList.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-    public Devices_Model getItem(int position) {
-        return modelList.get(position);
-    }
-
 
 }
 

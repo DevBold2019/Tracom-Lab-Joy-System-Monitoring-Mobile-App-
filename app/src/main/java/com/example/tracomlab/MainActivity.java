@@ -1,10 +1,12 @@
 package com.example.tracomlab;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,12 +27,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton RememberMe;
     ProgressDialog progressDialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         progressDialog= new ProgressDialog(this);
         progressDialog.setTitle("Login In Progress");
-        progressDialog.setMessage("Wait a while");
+        progressDialog.setMessage("Wait a while\t\n");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(R.color.colorBackground);
 
         RememberMeKidole = findViewById(R.id.RememberMeKidole);
         //*check if the Kidole Option will be applicable*//
@@ -88,17 +94,19 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(),"Cant Login with null values",Toast.LENGTH_LONG).show();
 
-            login_email_edt.setError("Required");
-            login_pass_edt.setError("Required");
+            login_email_edt.setError("Email is Required");
+            login_pass_edt.setError("Password is Required");
 
             return;
         }
-
         progressDialog.show();
+
+
 
         Ufs_Authentication_Interface ufsAuthenticationInterface = ServiceGenerator.createService(Ufs_Authentication_Interface.class, "captain", "edins");
 
         Call<Ufs_Authentication_Model> call = ufsAuthenticationInterface.getAuth("password", getMail, getPass);
+
 
         call.enqueue(new Callback<Ufs_Authentication_Model>() {
             @Override
@@ -195,9 +203,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Ufs_Authentication_Model> call, Throwable t) {
-                Toast.makeText(getApplication(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplication(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-                progressDialog.setMessage("Network error\n Please check your network");
+                progressDialog.setMessage("Network error\n Please check your network\n"+t.getMessage());
+                progressDialog.dismiss();
 
             }
         });
