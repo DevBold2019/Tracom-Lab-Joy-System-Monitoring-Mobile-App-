@@ -8,4 +8,5 @@
     <color name="colorChatText">#67E178</color>
     <color name="colorWhite">#fff</color>
     <color name="colorRed">#ff0000</color>
+    <color name="colorGrey">#FAFAFA</color>
 </resources>

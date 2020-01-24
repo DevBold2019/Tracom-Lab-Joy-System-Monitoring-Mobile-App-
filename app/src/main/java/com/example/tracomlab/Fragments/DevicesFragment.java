@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.tracomlab.Adapters.Devices_Adapter;
 import com.example.tracomlab.ConnectionToRest.RetrofitClient.MainClient;
 import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Devices_Interface;
@@ -49,21 +50,21 @@ public class DevicesFragment extends Fragment {
     private int currentPage = PAGE_START;*/
 
     @Override
-    public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
-       View view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view;
 
 
-       view=  inflater.inflate(R.layout.fragment_devices, container, false);
+        view = inflater.inflate(R.layout.fragment_devices, container, false);
 
 
-       linearLayout=view.findViewById(R.id.error_layout);
+        linearLayout = view.findViewById(R.id.error_layout);
 
-        recyclerView=view.findViewById(R.id.devicesRecycler);
+        recyclerView = view.findViewById(R.id.devicesRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(false);
 
 
-        list=new ArrayList<>();
+        list = new ArrayList<>();
 
         MainClient mainClient = new MainClient();
         Atlas_Devices_Interface atlasDevicesInterface = mainClient.getApiClient().create(Atlas_Devices_Interface.class);
@@ -82,6 +83,7 @@ public class DevicesFragment extends Fragment {
 
                 List<Atlas_Devices> atlas_devices = response.body();
 
+
                 for (Atlas_Devices atlasDevices : atlas_devices) {
 
                     String setPartNumber = atlasDevices.part_number;
@@ -90,21 +92,14 @@ public class DevicesFragment extends Fragment {
                     String setDeviceOwner = atlasDevices.device_owner;
                     String setCreationDate = atlasDevices.creation_date;
 
-                    System.err.println(setPartNumber);
-                    System.err.println(setSerialNumber);
-                    System.err.println(setDeviceOwner);
-
-
                     model = new Devices_Model(setSerialNumber, setDevicemodel, setPartNumber, setDeviceOwner, setCreationDate);
                     list.add(model);
 
-
                 }
 
-                 adapter = new Devices_Adapter(list, getContext());
+                adapter = new Devices_Adapter(list, getContext());
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
-
 
 
             }
@@ -112,9 +107,9 @@ public class DevicesFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Atlas_Devices>> call, Throwable t) {
-                Toast.makeText(getContext(),""+t.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-               isNetworkActive();
+                isNetworkActive();
 
             }
         });
@@ -128,8 +123,8 @@ public class DevicesFragment extends Fragment {
 
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
 
-         linearLayout.setVisibility(View.INVISIBLE);
-         return true;
+            linearLayout.setVisibility(View.INVISIBLE);
+            return true;
 
         }
         linearLayout.setVisibility(View.GONE);

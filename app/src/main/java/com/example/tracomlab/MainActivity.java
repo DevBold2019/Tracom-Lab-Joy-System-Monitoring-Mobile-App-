@@ -46,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         progressDialog= new ProgressDialog(this);
-        progressDialog.setTitle("Login In Progress");
-        progressDialog.setMessage("Wait a while");
+
 
         RememberMeKidole = findViewById(R.id.RememberMeKidole);
         //*check if the Kidole Option will be applicable*//
@@ -94,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        progressDialog.show();
+
 
         Ufs_Authentication_Interface ufsAuthenticationInterface = ServiceGenerator.createService(Ufs_Authentication_Interface.class, "captain", "edins");
 
@@ -107,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
 
                     String textToSaveEmail = login_email_edt.getText().toString();
                     String textToSavePassword = login_pass_edt.getText().toString();
+
+                    //login dialog on success
+                    progressDialog.setTitle("Login In Progress");
+                    progressDialog.setMessage("Wait a while");
+                    progressDialog.show();
+                    //login dialog on success
 
                     //*storing the username*//
                     try {
@@ -197,9 +202,27 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<Ufs_Authentication_Model> call, Throwable t) {
                 Toast.makeText(getApplication(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+                System.out.println("error"+t.getMessage());
+
                 progressDialog.setMessage("Network error\n Please check your network");
 
             }
         });
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.cancel();
+        }
     }
 }

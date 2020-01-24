@@ -32,15 +32,16 @@
 
 
             <TextView
+                android:id="@+id/deviceModel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
+                android:layout_margin="6dp"
+                android:maxWidth="150dp"
                 android:maxLength="80"
                 android:maxLines="2"
-                android:maxWidth="150dp"
+                android:padding="4dp"
                 android:text="Model"
-                android:layout_margin="6dp"
-                android:id="@+id/deviceModel"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/deviceOwnerName"
                 app:layout_constraintTop_toTopOf="parent" />
 

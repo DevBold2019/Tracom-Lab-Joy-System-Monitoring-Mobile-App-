@@ -5,22 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.dropOffFragment">
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dropOffRecycler">
-
-
+            android:id="@+id/dropOffRecycler"
+            tools:ignore="MissingConstraints">
         </androidx.recyclerview.widget.RecyclerView>
-    </androidx.core.widget.NestedScrollView>
 
 
 

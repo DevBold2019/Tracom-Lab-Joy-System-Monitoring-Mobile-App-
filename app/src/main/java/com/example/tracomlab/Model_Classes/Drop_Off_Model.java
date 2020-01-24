@@ -2,44 +2,54 @@ package com.example.tracomlab.Model_Classes;
 
 public class Drop_Off_Model {
 
-    String requestId,engineerName,NumberOfTerminals,deliveryTime;
+  String CustomerName,DeliveredStatus,DeliveredBy,TerminalsDelivered,DeliveredAt;
 
-    public Drop_Off_Model(String requestId, String engineerName, String numberOfTerminals, String deliveryTime) {
-        this.requestId = requestId;
-        this.engineerName = engineerName;
-        NumberOfTerminals = numberOfTerminals;
-        this.deliveryTime = deliveryTime;
+
+    public Drop_Off_Model(String customerName, String deliveredStatus, String deliveredBy, String terminalsDelivered, String deliveredAt) {
+        CustomerName = customerName;
+        DeliveredStatus = deliveredStatus;
+        DeliveredBy = deliveredBy;
+        TerminalsDelivered = terminalsDelivered;
+        DeliveredAt = deliveredAt;
     }
 
-    public String getRequestId() {
-        return requestId;
+    public String getCustomerName() {
+        return CustomerName;
     }
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
+    public void setCustomerName(String customerName) {
+        CustomerName = customerName;
     }
 
-    public String getEngineerName() {
-        return engineerName;
+    public String getDeliveredStatus() {
+        return DeliveredStatus;
     }
 
-    public void setEngineerName(String engineerName) {
-        this.engineerName = engineerName;
+    public void setDeliveredStatus(String deliveredStatus) {
+        DeliveredStatus = deliveredStatus;
     }
 
-    public String getNumberOfTerminals() {
-        return NumberOfTerminals;
+    public String getDeliveredBy() {
+        return DeliveredBy;
     }
 
-    public void setNumberOfTerminals(String numberOfTerminals) {
-        NumberOfTerminals = numberOfTerminals;
+    public void setDeliveredBy(String deliveredBy) {
+        DeliveredBy = deliveredBy;
     }
 
-    public String getDeliveryTime() {
-        return deliveryTime;
+    public String getTerminalsDelivered() {
+        return TerminalsDelivered;
     }
 
-    public void setDeliveryTime(String deliveryTime) {
-        this.deliveryTime = deliveryTime;
+    public void setTerminalsDelivered(String terminalsDelivered) {
+        TerminalsDelivered = terminalsDelivered;
+    }
+
+    public String getDeliveredAt() {
+        return DeliveredAt;
+    }
+
+    public void setDeliveredAt(String deliveredAt) {
+        DeliveredAt = deliveredAt;
     }
 }

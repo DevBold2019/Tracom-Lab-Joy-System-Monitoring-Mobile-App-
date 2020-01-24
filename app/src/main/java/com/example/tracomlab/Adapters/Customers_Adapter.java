@@ -107,7 +107,8 @@ public class Customers_Adapter extends RecyclerView.Adapter<Customers_Adapter.vi
             }
         }
 
-
-
-
+        public  void add(Customers_Model model){
+            customerModelist.add(model);
+            notifyItemInserted(customerModelist.size() - 1);
+        }
 }
