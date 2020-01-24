@@ -105,5 +105,9 @@ public class Manufacturer_Adapter extends RecyclerView.Adapter<Manufacturer_Adap
         }
     }
 
+    public void add(Manufacturer_Model model){
+        modelList.add(model);
+        notifyItemInserted(modelList.size() - 1);
+    }
 
 }

@@ -7,22 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:paddingBottom="60dp"
     tools:context=".Fragments.DeliveryFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/drop_off_layout"
-            android:id="@+id/deliveryRecycler">
-
+            android:id="@+id/deliveryRecycler"
+            tools:ignore="MissingConstraints">
 
         </androidx.recyclerview.widget.RecyclerView>
-    </androidx.core.widget.NestedScrollView>
 
 
 

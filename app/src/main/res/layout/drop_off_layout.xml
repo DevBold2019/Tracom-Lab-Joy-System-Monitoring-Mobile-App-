@@ -1,167 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="30dp"
+        >
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
 
             <TextView
+                android:id="@+id/CustomerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ClientLabel"
-                android:padding="8dp"
-                android:text="Engineer Name  :"
-                android:textColor="#fff"/>
+                android:layout_margin="6dp"
+                android:maxWidth="150dp"
+                android:maxLines="3"
+                android:padding="4dp"
+                android:text="Customer Name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/DeliveredStatus"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/engineerName"
-                android:layout_marginLeft="10dp"
-                android:padding="8dp"
-                android:text=" Ephantus"
-                android:textColor="#fff"/>
-
-        </LinearLayout>
+                android:layout_margin="6dp"
+                android:maxWidth="150dp"
+                android:maxLength="80"
+                android:maxLines="2"
+                android:padding="4dp"
+                android:text="Delivered Status"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/CustomerName"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <LinearLayout
+                android:id="@+id/moreDetailsRepair"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/CustomerName">
 
 
                 <TextView
+                    android:id="@+id/DeliveredBy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/requestId"
-                    android:padding="8dp"
-                    android:text="Request Id :"
-                    android:textColor="#fff"/>
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="Delivered By" />
 
                 <TextView
+                    android:id="@+id/TerminalsDelivered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/RequestId"
-                    android:layout_marginLeft="10dp"
-                    android:padding="8dp"
-                    android:text=" 0956748397"
-                    android:textColor="#fff"/>
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="Terminals Delivered"
+                    app:layout_constraintLeft_toRightOf="@+id/customersName"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/DeliveredAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="Delivered At"
+                    app:layout_constraintLeft_toRightOf="@+id/customersName"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </LinearLayout>
 
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/numberTerminalLbel"
-                    android:padding="8dp"
-                    android:text="No of Terminals :"
-                    android:textColor="#fff"/>
+            <ImageView
+                android:id="@+id/moreDetailsDeliveryButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="6dp"
+                android:padding="6dp"
+                android:src="@drawable/downbuttonpx"
+                android:textColor="#000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/moreDetailsRepair" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/TerminalNumber"
-                    android:layout_marginLeft="10dp"
-                    android:padding="8dp"
-                    android:text="1000"
-                    android:textColor="#fff"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:id="@+id/pickUpTime"
-                    android:text="Delivery Time  :"
-                    android:textColor="#fff"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/DropTime"
-                    android:layout_marginLeft="10dp"
-                    android:padding="8dp"
-                    android:text="12:00 hrs"
-                    android:textColor="#fff"/>
-
-
-
-            </LinearLayout>
-
-
-       <!--     <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Drop Off satatus  :"
-                    android:textColor="#fff"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/DeliveryStatus"
-                    android:layout_marginLeft="10dp"
-                    android:padding="8dp"
-                    android:text="Completed"
-                    android:textColor="#fff"/>
-
-
-
-            </LinearLayout>-->
-
-
-
-
-        </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
