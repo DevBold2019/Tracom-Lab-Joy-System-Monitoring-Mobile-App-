@@ -1,65 +1,66 @@
 package com.example.tracomlab.Model_Classes;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+
+@Entity(tableName = "devices_table")
 public class Devices_Model {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id = 0;
+    private String serialNumber ;
+    private String model;
+    private String partNumber;
+    private String deviceOwner ;
 
-    String SerialNumber;
-    String Model;
-    String PartNumber;
-    String DeviceOwner;
-    String DateCreated;
 
-
-    public Devices_Model(String serialNumber, String model, String partNumber, String deviceOwner, String dateCreated) {
-        SerialNumber = serialNumber;
-        Model = model;
-        PartNumber = partNumber;
-        DeviceOwner = deviceOwner;
-        DateCreated = dateCreated;
+    public Devices_Model(String serialNumber, String model, String partNumber, String deviceOwner) {
+        this.serialNumber = serialNumber;
+        this.model = model;
+        this.partNumber = partNumber;
+        this.deviceOwner = deviceOwner;
     }
 
-    public Devices_Model() {
 
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getSerialNumber() {
-        return SerialNumber;
+        return serialNumber;
     }
 
     public void setSerialNumber(String serialNumber) {
-        SerialNumber = serialNumber;
+        this.serialNumber = serialNumber;
     }
 
     public String getModel() {
-        return Model;
+        return model;
     }
 
     public void setModel(String model) {
-        Model = model;
+        this.model = model;
     }
 
     public String getPartNumber() {
-        return PartNumber;
+        return partNumber;
     }
 
     public void setPartNumber(String partNumber) {
-        PartNumber = partNumber;
+        this.partNumber = partNumber;
     }
 
     public String getDeviceOwner() {
-        return DeviceOwner;
+        return deviceOwner;
     }
 
     public void setDeviceOwner(String deviceOwner) {
-        DeviceOwner = deviceOwner;
-    }
-
-    public String getDateCreated() {
-        return DateCreated;
-    }
-
-    public void setDateCreated(String dateCreated) {
-        DateCreated = dateCreated;
+        this.deviceOwner = deviceOwner;
     }
 }

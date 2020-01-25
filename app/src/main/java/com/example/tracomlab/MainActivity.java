@@ -1,19 +1,24 @@
 package com.example.tracomlab;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -25,12 +30,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
@@ -38,14 +44,23 @@ public class MainActivity extends AppCompatActivity {
     RadioButton RememberMeKidole;
     RadioButton RememberMe;
     ProgressDialog progressDialog;
+    TextInputEditText login_email_edt;
+   TextInputEditText login_pass_edt;
 
+    String getMail;
+    String getPass;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        progressDialog= new ProgressDialog(this);
+        progressDialog= new ProgressDialog(this,R.style.loginDialog);
+        progressDialog.setMessage("A moment please");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
 
         RememberMeKidole = findViewById(R.id.RememberMeKidole);
@@ -74,26 +89,60 @@ public class MainActivity extends AppCompatActivity {
 
     public void NavigateToMainInterface(View view) {
 
-        final TextInputEditText login_email_edt = findViewById(R.id.login_email_edt);
-        final TextInputEditText login_pass_edt = findViewById(R.id.login_pass_edt);
+         login_email_edt = findViewById(R.id.login_email_edt);
+        login_pass_edt = findViewById(R.id.login_pass_edt);
 
-        RememberMe = findViewById(R.id.RememberMe);
-        RememberMeKidole = findViewById(R.id.RememberMeKidole);
+        RememberMe = findViewById(R.id.RememberMe);//Doesn't login whenchecked
+        RememberMeKidole = findViewById(R.id.RememberMeKidole);//logs in using fingerprint
 
-        String getMail = login_email_edt.getText().toString();
-        String getPass = login_pass_edt.getText().toString();
+       getMail = login_email_edt.getText().toString();
+        getPass = login_pass_edt.getText().toString();
 
         if (login_email_edt.getText().toString().trim().isEmpty() || login_pass_edt.getText().toString().trim().isEmpty() ){
 
             Toast.makeText(getApplicationContext(),"Cant Login with null values",Toast.LENGTH_LONG).show();
 
-            login_email_edt.setError("Required");
-            login_pass_edt.setError("Required");
+            login_email_edt.setError("Email is Required");
+            login_pass_edt.setError("Password is Required");
 
             return;
         }
 
 
+
+        progressDialog.show();
+        isNetworkActive();
+
+
+
+
+
+
+
+    }
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean isNetworkActive() {
+
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if theres network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+
+            loginUser();
+
+            return true;
+        }
+
+        Toast.makeText(getApplicationContext(),"check Your network Settings",Toast.LENGTH_LONG).show();
+        progressDialog.dismiss();
+
+        return false;
+    }
+
+    public void  loginUser(){
 
         Ufs_Authentication_Interface ufsAuthenticationInterface = ServiceGenerator.createService(Ufs_Authentication_Interface.class, "captain", "edins");
 
@@ -102,127 +151,124 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Ufs_Authentication_Model>() {
             @Override
             public void onResponse(Call<Ufs_Authentication_Model> call, final Response<Ufs_Authentication_Model> response) {
+
                 if (response.isSuccessful()) {
 
-                    String textToSaveEmail = login_email_edt.getText().toString();
-                    String textToSavePassword = login_pass_edt.getText().toString();
+                    progressDialog.setMessage("Wait a while.....");
+                    checkRadioButtons();
 
-                    //login dialog on success
-                    progressDialog.setTitle("Login In Progress");
-                    progressDialog.setMessage("Wait a while");
-                    progressDialog.show();
-                    //login dialog on success
 
-                    //*storing the username*//
-                    try {
-                        FileOutputStream fileOut = openFileOutput("name.txt", Context.MODE_PRIVATE);
-                        OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-                        outputWriter.write(textToSaveEmail);
-                        outputWriter.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //*storing the username*//
-
-                    //*radio button action listener*//
-                    if (RememberMe.isChecked()) {
-
-                        //*enabling remember me password*//
-
-                        getSharedPreferences("TracomLabcom", Context.MODE_PRIVATE)
-                                .edit()
-                                .putString("username", textToSaveEmail)
-                                .putString("password", textToSavePassword)
-                                .apply();
-
-                        //*enabling remember me password*//
-
-                        //*storing the username*//
-                        try {
-
-                            FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-                            outputWriter.write("no");
-                            outputWriter.close();
-
-                        } catch (Exception e) {
-
-                            e.printStackTrace();
-
-                        }
-                        //*storing the username*//
-
-                    } else if (RememberMeKidole.isChecked()) {
-
-                        //*enabling remember me password*//
-                        getSharedPreferences("TracomLabcom", Context.MODE_PRIVATE)
-                                .edit()
-                                .putString("username", textToSaveEmail)
-                                .putString("password", textToSavePassword)
-                                .apply();
-                        //*enabling remember me password*//
-
-                        //*storing the username*//
-                        try {
-                            FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-                            outputWriter.write("yes");
-                            outputWriter.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        //*storing the username*//
-                    } else {
-
-                        //*storing the username*//
-                        try {
-                            FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
-                            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-                            outputWriter.write("nothing");
-                            outputWriter.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        //*storing the username*//
-                    }
-                    //*radio button action listener*//
-
-                    //*open the application*//
-                    Intent intent = new Intent(getApplication(), MainUserInteface.class);
-                    startActivity(intent);
-                    finish();
-                    //*open the application*//
                 } else {
 
+                    isNetworkActive();
+
                     Toast.makeText(getApplication(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    progressDialog.setTitle("An error occurred");
+                    progressDialog.setMessage(""+response.code());
+
                 }
             }
 
             @Override
             public void onFailure(Call<Ufs_Authentication_Model> call, Throwable t) {
-                Toast.makeText(getApplication(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-                System.out.println("error"+t.getMessage());
-
-                progressDialog.setMessage("Network error\n Please check your network");
+                progressDialog.setTitle("An error occured");
+                progressDialog.setMessage("Please check your network\n"+t.getMessage());
+                progressDialog.dismiss();
 
             }
         });
+
+
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.cancel();
+
+    public void checkRadioButtons(){
+
+        String textToSaveEmail = login_email_edt.getText().toString();
+        String textToSavePassword = login_pass_edt.getText().toString();
+
+        //*enabling remember me password*//
+        if (RememberMe.isChecked()) {
+
+            try {
+
+                //*storing the username*//
+                FileOutputStream fileOut = openFileOutput("name.txt", Context.MODE_PRIVATE);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
+                outputWriter.write(textToSaveEmail);
+                outputWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+            getSharedPreferences("TracomLabcom", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("username", textToSaveEmail)
+                    .putString("password", textToSavePassword)
+                    .apply();
+
+            //*enabling remember me password*//
+
+            //*storing the username*//
+            try {
+
+                FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
+                outputWriter.write("no");
+                outputWriter.close();
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+            }
+            //*storing the username*//
+
+        } else if (RememberMeKidole.isChecked()) {
+
+            //*enabling remember me password*//
+            getSharedPreferences("TracomLabcom", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("username", textToSaveEmail)
+                    .putString("password", textToSavePassword)
+                    .apply();
+            //*enabling remember me password*//
+
+            //*storing the username*//
+            try {
+
+                FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
+                outputWriter.write("yes");
+                outputWriter.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //*storing the username*//
+        } else {
+
+            //*storing the username*//
+            try {
+                FileOutputStream fileOut = openFileOutput("status.txt", Context.MODE_PRIVATE);
+                OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
+                outputWriter.write("nothing");
+                outputWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //*storing the username*//
         }
+
+        //*open the application*//
+        Intent intent = new Intent(getApplication(), MainUserInteface.class);
+        startActivity(intent);
+        finish();
+
     }
+
+
+
+
 }

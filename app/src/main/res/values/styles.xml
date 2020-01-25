@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorWhite</item>
     </style>
 
+    <!-- progressBar Theme-->
+    <style name="progressBarBlue" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/colorBackground</item>
+    </style>
+
+    <!--login Dialog-->
+    <style name="loginDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="colorAccent">#fff</item>
+    </style>
+
+
+
 </resources>
