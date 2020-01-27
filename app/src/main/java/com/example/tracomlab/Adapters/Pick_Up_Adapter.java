@@ -4,12 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.tracomlab.Model_Classes.Pick_Up_Model;
 import com.example.tracomlab.R;
 
@@ -45,7 +49,7 @@ public class Pick_Up_Adapter extends RecyclerView.Adapter<Pick_Up_Adapter.viewho
 
     public interface OnItemClickListener {
 
-        void onItemClick(ImageButton imagebutton, View view, Pick_Up_Model model, int position);
+        void onItemClick(Button approveButton, View view, Pick_Up_Model model, int position);
 
     }
 
@@ -59,21 +63,40 @@ public class Pick_Up_Adapter extends RecyclerView.Adapter<Pick_Up_Adapter.viewho
 
         final Pick_Up_Model model=modelList.get(position);
 
-        holder.t1.setText(model.getClientName());
-        holder.t2.setText(model.getRequestId());
+        holder.t1.setText(model.getOrderId());
+        holder.t2.setText(model.getQtPurchased());
 
-        holder.t3.setText(model.getNumberOfTerminal());
-        holder.t4.setText(model.getPickUpTime());
+        holder.t3.setText(model.getDescription());
 
-        holder.t5.setText(model.getLocation());
-
-        holder.b1.setOnClickListener(new View.OnClickListener() {
+        holder.approveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(holder.b1,view,model,position);
+                    mOnItemClickListener.onItemClick(holder.approveButton,view,model,position);
                 }
+
+            }
+        });
+
+        Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(holder.linearLayout.getVisibility() != View.VISIBLE){
+
+                    holder.linearLayout.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(R.drawable.slideuppx).into(holder.imageView);
+
+                }else{
+
+                    holder.linearLayout.setVisibility(View.GONE);
+                    Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
+
+                }
+
 
             }
         });
@@ -90,22 +113,22 @@ public class Pick_Up_Adapter extends RecyclerView.Adapter<Pick_Up_Adapter.viewho
 
     public class viewholder extends RecyclerView.ViewHolder {
 
-        TextView t1,t2,t3,t4,t5;
-        ImageButton b1,b2;
+        TextView t1,t2,t3;
+        ImageView imageView;
+        Button approveButton;
+        LinearLayout linearLayout;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
-            t1=itemView.findViewById(R.id.ClientName);
-            t2=itemView.findViewById(R.id.RequestId);
+            t1=itemView.findViewById(R.id.OrderID);
+            t2=itemView.findViewById(R.id.qtPurchased);
+            t3=itemView.findViewById(R.id.description);
 
-            t3=itemView.findViewById(R.id.TerminalNumber);
-            t4=itemView.findViewById(R.id.PickTime);
 
-            t5=itemView.findViewById(R.id.PickLocation);
-
-            b1=itemView.findViewById(R.id.acceptBtn);
-            b2=itemView.findViewById(R.id.declineBtn);
+            approveButton = itemView.findViewById(R.id.ButtonApprove);
+            imageView=itemView.findViewById(R.id.moreDetailsOrderButton);
+            linearLayout = itemView.findViewById(R.id.moreOrderDetails);
 
 
 

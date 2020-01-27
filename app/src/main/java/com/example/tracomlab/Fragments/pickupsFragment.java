@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class pickupsFragment extends Fragment {
 
         for (int i=0; i<5; i++){
 
-            Pick_Up_Model model= new Pick_Up_Model("123456789","Equity Bank","450","Karen","12:00 hrs");
+            Pick_Up_Model model= new Pick_Up_Model("123456789","Equity Bank","450");
             list.add(model);
 
         }
@@ -55,19 +56,12 @@ public class pickupsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new Pick_Up_Adapter.OnItemClickListener() {
-
             @Override
-            public void onItemClick(ImageButton imagebutton, View view, Pick_Up_Model model, int position) {
+            public void onItemClick(Button approveButton, View view, Pick_Up_Model model, int position) {
 
                 Toast.makeText(getContext(), "Accepted", Toast.LENGTH_SHORT).show();
-                list.remove(list.size()-1);
-
+                list.remove(list.size() - 1);
                 adapter.notifyDataSetChanged();
-
-                Toast.makeText(getContext(), ""+list.size(), Toast.LENGTH_SHORT).show();
-
-
-
             }
         });
 

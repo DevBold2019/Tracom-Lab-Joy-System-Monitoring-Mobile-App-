@@ -50,9 +50,6 @@ public class Drop_Off_Adapter extends RecyclerView.Adapter<Drop_Off_Adapter.view
 
             holder.t1.setText(model.getCustomerName());
             holder.t2.setText(model.getDeliveredStatus());
-            holder.t3.setText(model.getDeliveredBy());
-            holder.t4.setText(model.getTerminalsDelivered());
-            holder.t5.setText(model.getDeliveredAt());
 
 
         Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
@@ -98,9 +95,6 @@ public class Drop_Off_Adapter extends RecyclerView.Adapter<Drop_Off_Adapter.view
 
             t1 = itemView.findViewById(R.id.CustomerName);
             t2 = itemView.findViewById(R.id.DeliveredStatus);
-            t3 = itemView.findViewById(R.id.DeliveredBy);
-            t4 = itemView.findViewById(R.id.TerminalsDelivered);
-            t5 = itemView.findViewById(R.id.DeliveredAt);
 
             imageView = itemView.findViewById(R.id.moreDetailsDeliveryButton);
             linearLayout = itemView.findViewById(R.id.moreDetailsRepair);

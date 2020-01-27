@@ -46,53 +46,49 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <LinearLayout
+                android:id="@+id/moreDeviceDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:orientation="vertical"
                 android:visibility="gone"
-                android:id="@+id/moreDeviceDetails"
                 app:layout_constraintTop_toBottomOf="@+id/deviceOwnerName"
-                android:orientation="vertical">
+                card_view:layout_editor_absoluteX="5dp">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="Part Number"
-                    android:maxLines="2"
-                    android:maxWidth="150dp"
                     android:id="@+id/devicePartNumber"
-                    android:layout_margin="6dp" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
+                    android:padding="4dp"
+                    android:text="Part Number" />
+
+                <TextView
+                    android:id="@+id/deviceSerialNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
                     android:padding="4dp"
                     android:text="Serial Number"
-                    android:maxLines="2"
-                    android:maxWidth="150dp"
-                    android:id="@+id/deviceSerialNumber"
-                    android:layout_margin="6dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/customersName"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
+                    android:id="@+id/deviceCreationDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:maxWidth="150dp"
+                    android:maxLines="2"
                     android:padding="4dp"
                     android:text="Creation Date"
-                    android:maxLines="2"
-                    android:maxWidth="150dp"
-                    android:id="@+id/deviceCreationDate"
-                    android:layout_margin="6dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/customersName"/>
-
-
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </LinearLayout>

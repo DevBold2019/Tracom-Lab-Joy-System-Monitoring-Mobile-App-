@@ -2,15 +2,12 @@ package com.example.tracomlab.Model_Classes;
 
 public class Drop_Off_Model {
 
-  String CustomerName,DeliveredStatus,DeliveredBy,TerminalsDelivered,DeliveredAt;
+  String CustomerName,DeliveredStatus;
 
 
-    public Drop_Off_Model(String customerName, String deliveredStatus, String deliveredBy, String terminalsDelivered, String deliveredAt) {
+    public Drop_Off_Model(String customerName, String deliveredStatus) {
         CustomerName = customerName;
         DeliveredStatus = deliveredStatus;
-        DeliveredBy = deliveredBy;
-        TerminalsDelivered = terminalsDelivered;
-        DeliveredAt = deliveredAt;
     }
 
     public String getCustomerName() {
@@ -29,27 +26,4 @@ public class Drop_Off_Model {
         DeliveredStatus = deliveredStatus;
     }
 
-    public String getDeliveredBy() {
-        return DeliveredBy;
-    }
-
-    public void setDeliveredBy(String deliveredBy) {
-        DeliveredBy = deliveredBy;
-    }
-
-    public String getTerminalsDelivered() {
-        return TerminalsDelivered;
-    }
-
-    public void setTerminalsDelivered(String terminalsDelivered) {
-        TerminalsDelivered = terminalsDelivered;
-    }
-
-    public String getDeliveredAt() {
-        return DeliveredAt;
-    }
-
-    public void setDeliveredAt(String deliveredAt) {
-        DeliveredAt = deliveredAt;
-    }
 }

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="10dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +30,7 @@
                 android:maxLines="3"
                 android:padding="4dp"
                 android:text="Customer Name"
+                android:textColor="@color/colorBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +38,7 @@
             <TextView
                 android:id="@+id/DeliveredStatus"
                 android:layout_width="0dp"
+                android:textColor="@color/colorBackground"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:maxWidth="150dp"
@@ -56,44 +58,63 @@
                 android:layout_margin="5dp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/CustomerName">
+                app:layout_constraintTop_toBottomOf="@+id/CustomerName"
+                card_view:layout_editor_absoluteX="5dp">
 
 
-                <TextView
-                    android:id="@+id/DeliveredBy"
-                    android:layout_width="wrap_content"
+                <TableLayout
+                    android:id="@+id/table_delivery"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:maxWidth="150dp"
-                    android:maxLines="2"
-                    android:padding="4dp"
-                    android:text="Delivered By" />
-
-                <TextView
-                    android:id="@+id/TerminalsDelivered"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:maxWidth="150dp"
-                    android:maxLines="2"
-                    android:padding="4dp"
-                    android:text="Terminals Delivered"
-                    app:layout_constraintLeft_toRightOf="@+id/customersName"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:shrinkColumns="*"
+                    android:stretchColumns="*"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
 
-                <TextView
-                    android:id="@+id/DeliveredAt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:maxWidth="150dp"
-                    android:maxLines="2"
-                    android:padding="4dp"
-                    android:text="Delivered At"
-                    app:layout_constraintLeft_toRightOf="@+id/customersName"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/cellrowheader"
+                            android:padding="5dp"
+                            android:text="Date"
+                            android:textColor="#fff" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/cellrowheader"
+                            android:padding="5dp"
+                            android:text="Delivered by"
+                            android:textColor="#fff" />
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/cellrowheader"
+                            android:padding="5dp"
+                            android:text="No.Terminals"
+                            android:textColor="#fff" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/cellrowheader"
+                            android:padding="5dp"
+                            android:text="Place"
+                            android:textColor="#fff" />
+                    </TableRow>
+                </TableLayout>
 
             </LinearLayout>
 
