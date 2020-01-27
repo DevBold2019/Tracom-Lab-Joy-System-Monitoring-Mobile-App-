@@ -24,11 +24,13 @@ import com.example.tracomlab.Fragments.ContactsFragment;
 import com.example.tracomlab.Fragments.CustomerFragment;
 import com.example.tracomlab.Fragments.DashFragment;
 import com.example.tracomlab.Fragments.DeliveryFragment;
+import com.example.tracomlab.Fragments.Device_History_Fragment;
 import com.example.tracomlab.Fragments.DevicesFragment;
 import com.example.tracomlab.Fragments.InventoryFragment;
 import com.example.tracomlab.Fragments.ManufacturerFragment;
 import com.example.tracomlab.Fragments.OrdersFragment;
 import com.example.tracomlab.Fragments.RepairFragment;
+import com.example.tracomlab.Fragments.parts_History_Fragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.BufferedReader;
@@ -159,6 +161,20 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
 
              Objects.requireNonNull(getSupportActionBar()).setTitle("Inventory Reports");
              getSupportFragmentManager().beginTransaction().replace(R.id.Container,new InventoryFragment()).commit();
+
+             break;
+
+         case R.id.devicesHistoryMenu:
+
+             Objects.requireNonNull(getSupportActionBar()).setTitle("Devices History");
+             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new Device_History_Fragment()).commit();
+
+             break;
+
+         case R.id.partsHistoryMenu:
+
+             Objects.requireNonNull(getSupportActionBar()).setTitle("Parts History");
+             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new parts_History_Fragment()).commit();
 
              break;
 
