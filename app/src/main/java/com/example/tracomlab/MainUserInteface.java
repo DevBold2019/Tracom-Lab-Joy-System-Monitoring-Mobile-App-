@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,8 +90,22 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
         }
         //*retrieve the username*//
 
-        navigationView.setNavigationItemSelectedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.Container, new DashFragment()).commit();
+        SharedPreferences pref = getSharedPreferences("scanDevice", Context.MODE_PRIVATE);
+        String DeviceHistory = pref.getString("nameHistory", null);
+        if (DeviceHistory != null) {
+            if (DeviceHistory != "empty") {
+                Objects.requireNonNull(getSupportActionBar()).setTitle("Devices History");
+                navigationView.setNavigationItemSelectedListener(this);
+                getSupportFragmentManager().beginTransaction().replace(R.id.Container, new Device_History_Fragment()).commit();
+
+                SharedPreferences.Editor prefEdit = pref.edit();
+                prefEdit.clear();
+                prefEdit.apply();
+            }
+        } else {
+            navigationView.setNavigationItemSelectedListener(this);
+            getSupportFragmentManager().beginTransaction().replace(R.id.Container, new DashFragment()).commit();
+     }
 
 
     }
@@ -99,88 +114,90 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-     switch (menuItem.getItemId()){
-
-     case  R.id.repairMenu:
-
-     Objects.requireNonNull(getSupportActionBar()).setTitle("Repairs");
-     getSupportFragmentManager().beginTransaction().replace(R.id.Container,new RepairFragment()).commit();
-
-     break;
-
-         case  R.id.dashMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Dashboard");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new DashFragment()).commit();
-
-             break;
 
 
-         case  R.id.orderMenu:
+            switch (menuItem.getItemId()) {
 
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Orders");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new OrdersFragment()).commit();
+                case R.id.repairMenu:
 
-             break;
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Repairs");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new RepairFragment()).commit();
 
-         case R.id.deliveryMenu:
+                    break;
 
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Delivery");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new DeliveryFragment()).commit();
+                case R.id.dashMenu:
 
-             break;
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Dashboard");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new DashFragment()).commit();
 
-         case R.id.consultationMenu:
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Contacts");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new ContactsFragment()).commit();
-
-             break;
-
-         case R.id.customerOnBoardedDeviceMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Customers");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new CustomerFragment()).commit();
-
-             break;
-
-         case R.id.manufacturerOnBoardedDeviceMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Manufacturer");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new ManufacturerFragment()).commit();
-
-             break;
-
-         case R.id.devicesOnBoardedDeviceMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Devices");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new DevicesFragment()).commit();
-
-             break;
-
-         case R.id.inventoryReportsMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Inventory Reports");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new InventoryFragment()).commit();
-
-             break;
-
-         case R.id.devicesHistoryMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Devices History");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new Device_History_Fragment()).commit();
-
-             break;
-
-         case R.id.partsHistoryMenu:
-
-             Objects.requireNonNull(getSupportActionBar()).setTitle("Parts History");
-             getSupportFragmentManager().beginTransaction().replace(R.id.Container,new parts_History_Fragment()).commit();
-
-             break;
+                    break;
 
 
+                case R.id.orderMenu:
 
-        }
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Orders");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new OrdersFragment()).commit();
+
+                    break;
+
+                case R.id.deliveryMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Delivery");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new DeliveryFragment()).commit();
+
+                    break;
+
+                case R.id.consultationMenu:
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Contacts");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new ContactsFragment()).commit();
+
+                    break;
+
+                case R.id.customerOnBoardedDeviceMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Customers");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new CustomerFragment()).commit();
+
+                    break;
+
+                case R.id.manufacturerOnBoardedDeviceMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Manufacturer");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new ManufacturerFragment()).commit();
+
+                    break;
+
+                case R.id.devicesOnBoardedDeviceMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Devices");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new DevicesFragment()).commit();
+
+                    break;
+
+                case R.id.inventoryReportsMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Inventory Reports");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new InventoryFragment()).commit();
+
+                    break;
+
+                case R.id.devicesHistoryMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Devices History");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new Device_History_Fragment()).commit();
+
+                    break;
+
+                case R.id.partsHistoryMenu:
+
+                    Objects.requireNonNull(getSupportActionBar()).setTitle("Parts");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.Container, new parts_History_Fragment()).commit();
+
+                    break;
+
+
+            }
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
 
@@ -216,4 +233,5 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
 
         return true;
     }
+
 }

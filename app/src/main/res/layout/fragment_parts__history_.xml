@@ -7,17 +7,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.parts_History_Fragment">
 
-    <androidx.appcompat.widget.SearchView
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="10dp"
-        app:queryHint="Search parts"
+        android:queryHint="Search by part model"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/searchPartsSearchView"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:listitem="@layout/parts"
         android:id="@+id/partsHistoryRecyclerView"
         app:layout_constraintTop_toBottomOf="@+id/searchPartsSearchView"/>
 

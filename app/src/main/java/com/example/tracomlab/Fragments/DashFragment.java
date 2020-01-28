@@ -120,6 +120,7 @@ public class DashFragment extends Fragment {
 
                 @Override
                 public void onFailure (Call < List < Atlas_Repair >> call, Throwable t){
+
                     Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
