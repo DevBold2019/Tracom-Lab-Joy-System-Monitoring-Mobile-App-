@@ -91,7 +91,7 @@ public class Kidole_Option extends Fragment {
                 getActivity().finish();
             } else if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
                 mParaLabel.getText();
-                mParaLabel.setText("Permission not granted to use Fingerprint Scanner");
+                mParaLabel.setText("Permission not granted to use Fingerprint Scans");
 
             } else if (!keyguardManager.isKeyguardSecure()){
                 mParaLabel.getText();
@@ -103,7 +103,7 @@ public class Kidole_Option extends Fragment {
 
             } else {
                 mParaLabel.getText();
-                mParaLabel.setText("Place your Finger on the Scanner to Proceed");
+                mParaLabel.setText("Place your Finger on the Scans to Proceed");
                 generateKey();
 
                 if (cipherInit()){

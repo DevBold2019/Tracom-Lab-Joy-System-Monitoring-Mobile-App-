@@ -74,7 +74,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
                 handler.postDelayed(new Runnable() {
                     public void run() {
                         paraLabel.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                        paraLabel.setText("Place your Finger on the Scanner to Proceed");
+                        paraLabel.setText("Place your Finger on the Scans to Proceed");
                         paraLabel.setTypeface(paraLabel.getTypeface(), Typeface.BOLD);
                         icon_kidole.setBackgroundResource(R.drawable.kidole);
                     }

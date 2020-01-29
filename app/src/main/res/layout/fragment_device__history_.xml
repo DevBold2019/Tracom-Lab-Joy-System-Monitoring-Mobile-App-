@@ -4,21 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/scan_start"
+    android:paddingBottom="60dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.Device_History_Fragment">
 
-  <androidx.appcompat.widget.SearchView
+  <Button
+      android:id="@+id/scan_me"
+      android:layout_width="60dp"
+      android:layout_height="30dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginLeft="8dp"
+      android:background="@drawable/edtwhite_btn"
+      android:text="Scan"
+      android:textAlignment="center"
+      android:textAllCaps="false"
+      android:textColor="#fff"
+      app:layout_constraintBottom_toBottomOf="@+id/SearchDeviceHistorySearchView"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <SearchView
+      android:id="@+id/SearchDeviceHistorySearchView"
+      android:layout_width="300dp"
+      android:layout_height="45dp"
+      android:layout_margin="5dp"
+      android:layout_marginStart="38dp"
+      android:layout_marginLeft="38dp"
+      android:paddingRight="6dp"
+      android:tooltipText="click to search using serial number"
+      app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/scan_me"
+      app:layout_constraintTop_toTopOf="parent"
+      android:queryHint="Search using serial number">
+
+  </SearchView>
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/recyclerView2"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      app:queryHint="Search A Device"
-      android:id="@+id/SearchDeviceHistorySearchView"
-      app:layout_constraintTop_toTopOf="parent"
-      android:layout_margin="5dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/SearchDeviceHistorySearchView"/>
+      tools:listitem="@layout/device_history"
+      app:layout_constraintTop_toBottomOf="@+id/SearchDeviceHistorySearchView" />
 
 
 

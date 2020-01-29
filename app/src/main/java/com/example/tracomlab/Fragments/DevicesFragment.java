@@ -79,7 +79,7 @@ public class DevicesFragment extends Fragment {
                 Toast.makeText(getActivity(),"On changed",Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.VISIBLE);
 
-                    modelList.remove(modelList.size()-4000);
+                    //modelList.remove(modelList.size()-4000);
                     adapter.notifyDataSetChanged();
                     Toast.makeText(getContext(),""+modelList.size()+"\t size ",Toast.LENGTH_LONG).show();
 

@@ -72,7 +72,7 @@
                 android:id="@+id/inventoryReportsMenu"
                 android:icon="@drawable/ininventory" />
             <item
-                android:title="Parts History"
+                android:title="Parts"
                 android:id="@+id/partsHistoryMenu"
                 android:icon="@drawable/activityhistory" />
 
