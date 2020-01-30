@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,6 +29,7 @@ import com.example.tracomlab.ConnectionToRest.RetrofitClient.ServiceGenerator;
 import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Ufs_Authentication_Interface;
 import com.example.tracomlab.ConnectionToRest.RetrofitModel.Ufs_Authentication_Model;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -49,6 +52,7 @@ public class MainActivity extends Activity {
 
     String getMail;
     String getPass;
+    Dialog dialog;
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -58,13 +62,25 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
         progressDialog= new ProgressDialog(this,R.style.loginDialog);
         progressDialog.setMessage("A moment please");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
+        //Email EditText
+        login_email_edt = findViewById(R.id.login_email_edt);
+        //Password EditText
+        login_pass_edt = findViewById(R.id.login_pass_edt);
 
+        //Doesn't login when user logs in the app again
+        RememberMe = findViewById(R.id.RememberMe);
+        //Next time time user logs in using fingerprint
         RememberMeKidole = findViewById(R.id.RememberMeKidole);
-        //*check if the Kidole Option will be applicable*//
+
+
+        //*check if the FingerPrint Option will be applicable*//
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
             fingerprintManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
@@ -83,24 +99,17 @@ public class MainActivity extends Activity {
         } else {
             RememberMeKidole.setEnabled(false);
         }
-        //*check if the Kidole Option will be applicable*//
 
     }
 
     public void NavigateToMainInterface(View view) {
-
-         login_email_edt = findViewById(R.id.login_email_edt);
-        login_pass_edt = findViewById(R.id.login_pass_edt);
-
-        RememberMe = findViewById(R.id.RememberMe);//Doesn't login whenchecked
-        RememberMeKidole = findViewById(R.id.RememberMeKidole);//logs in using fingerprint
 
        getMail = login_email_edt.getText().toString();
         getPass = login_pass_edt.getText().toString();
 
         if (login_email_edt.getText().toString().trim().isEmpty() || login_pass_edt.getText().toString().trim().isEmpty() ){
 
-            Toast.makeText(getApplicationContext(),"Cant Login with null values",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Can't Login with null values",Toast.LENGTH_LONG).show();
 
             login_email_edt.setError("Email is Required");
             login_pass_edt.setError("Password is Required");
@@ -108,19 +117,10 @@ public class MainActivity extends Activity {
             return;
         }
 
-
-
-        progressDialog.show();
         isNetworkActive();
 
 
-
-
-
-
-
     }
-
     //For connectivity check if the  wifi/network is connected to the internet
     private boolean isNetworkActive() {
 
@@ -143,6 +143,8 @@ public class MainActivity extends Activity {
     }
 
     public void  loginUser(){
+
+        progressDialog.show();
 
         Ufs_Authentication_Interface ufsAuthenticationInterface = ServiceGenerator.createService(Ufs_Authentication_Interface.class, "captain", "edins");
 
@@ -268,7 +270,13 @@ public class MainActivity extends Activity {
 
     }
 
+    public void GetOtp(View view) {
+
+        Intent intent=new Intent(MainActivity.this,Email_Verification_Activity.class);
+        startActivity(intent);
+        finish();
 
 
 
+    }
 }

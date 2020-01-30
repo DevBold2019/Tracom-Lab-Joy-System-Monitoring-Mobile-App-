@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,8 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
         toolbar=findViewById(R.id.main_user_interface_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("DashBoard");
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 
         drawerLayout=findViewById(R.id.drawer_layout);

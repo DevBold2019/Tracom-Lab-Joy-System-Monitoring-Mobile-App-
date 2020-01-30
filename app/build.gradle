@@ -13,6 +13,7 @@ android {
     }
 
     repositories {
+
         maven { url 'https://jitpack.io' }
     }
 
@@ -44,9 +45,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation "com.journeyapps:zxing-android-embedded:3.5.0@aar"
+    implementation "com.google.zxing:core:3.3.0"
 
-
-    //Retrofit & gson dependencies
+    //Retrofit & Gson dependencies
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     //Glide for loading pictures
@@ -58,10 +60,8 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Dexter for requesting run-time permissions where needed
     implementation 'com.karumi:dexter:6.0.1'
-
     //Paging dependency
     implementation "androidx.paging:paging-runtime:$paging_version"
-
     //Room Dependency
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
@@ -70,9 +70,8 @@ dependencies {
     // barcode scanner
     implementation 'com.google.android.gms:play-services-vision:11.8.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
-
-    implementation "com.journeyapps:zxing-android-embedded:3.5.0@aar"
-    implementation "com.google.zxing:core:3.3.0"
+    //Pin View For The OTP
+    implementation 'com.github.GoodieBag:Pinview:v1.3'
 
 
 }
