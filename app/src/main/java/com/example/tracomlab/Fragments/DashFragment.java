@@ -4,13 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.tracomlab.ConnectionToRest.RetrofitClient.MainClient;
+import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Delivery_Interface;
+import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Devices_Interface;
 import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Repair_Interface;
+import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Shipped_Interface;
+import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Delivery;
+import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Devices;
 import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Repair;
+import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Shipped;
 import com.example.tracomlab.R;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -19,7 +27,10 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +40,7 @@ import retrofit2.Response;
 public class DashFragment extends Fragment {
 
     private PieChart PieChart;
+    TextView onboardedDevices, ReceivedDevices, ShippedDevices, RepairedDevices, DeliveredDevice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +50,13 @@ public class DashFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_dash, container, false);
 
         PieChart = view.findViewById(R.id.summaryPie);
+
+        onboardedDevices = view.findViewById(R.id.onboardedDevices);
+        ReceivedDevices = view.findViewById(R.id.ReceivedDevices);
+        ShippedDevices = view.findViewById(R.id.ShippedDevices);
+        RepairedDevices = view.findViewById(R.id.RepairedDevices);
+        DeliveredDevice = view.findViewById(R.id.DeliveredDevice);
+
 
         final List<PieEntry> testingList = new ArrayList<>();
 
@@ -67,7 +86,6 @@ public class DashFragment extends Fragment {
                     String setLevel = atlasRepair.getLevels();
                     String setTestResults = atlasRepair.getQa_test_status();
                     String setRepairedStatus = atlasRepair.getRepair_status();
-
 
 
                     if (setRepairedStatus != null && setRepairedStatus.equals("Repaired")) {
@@ -118,17 +136,186 @@ public class DashFragment extends Fragment {
                 //populate the pie chart
             }
 
-                @Override
-                public void onFailure (Call < List < Atlas_Repair >> call, Throwable t){
+            @Override
+            public void onFailure(Call<List<Atlas_Repair>> call, Throwable t) {
 
-                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-
+        getShipped();
+        getDelivered();
+        getOnboard();
+        getRepaired();
+        getReceived();
 
         return view;
 
-        }
+    }
+
+    public void getOnboard() {
+
+        MainClient mainClient = new MainClient();
+        Atlas_Devices_Interface atlasDevicesInterface = mainClient.getApiClient().create(Atlas_Devices_Interface.class);
+
+        Call<List<Atlas_Devices>> call;
+        call = atlasDevicesInterface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Devices>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Devices>> call, Response<List<Atlas_Devices>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Atlas_Devices> atlas_devices = response.body();
+
+                int count = atlas_devices.size();
+                onboardedDevices.setText(Integer.toString(count));
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Devices>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
+
+    public void getReceived() {
+        MainClient mainClient = new MainClient();
+        Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
+
+        Call<List<Atlas_Repair>> call;
+        call = repair_interface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Repair>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Repair>> call, Response<List<Atlas_Repair>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Atlas_Repair> atlas_repairs = response.body();
+
+                int count = 0;
+                for (Atlas_Repair repair : atlas_repairs) {
+                    count = count + 1;
+                }
+                ReceivedDevices.setText(Integer.toString(count));
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Repair>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getShipped() {
+
+        MainClient mainClient = new MainClient();
+        Atlas_Shipped_Interface shipped_interface = mainClient.getApiClient().create(Atlas_Shipped_Interface.class);
+
+        Call<List<Atlas_Shipped>> call;
+        call = shipped_interface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Shipped>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Shipped>> call, Response<List<Atlas_Shipped>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Atlas_Shipped> atlas_shipped = response.body();
+
+                int count = atlas_shipped.size();
+
+                ShippedDevices.setText(Integer.toString(count));
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Shipped>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void getRepaired() {
+
+        MainClient mainClient = new MainClient();
+        Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
+
+        Call<List<Atlas_Repair>> call;
+        call = repair_interface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Repair>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Repair>> call, Response<List<Atlas_Repair>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Atlas_Repair> atlas_repairs = response.body();
+
+                int count = 0;
+                for (Atlas_Repair repair : atlas_repairs) {
+
+                    if (repair.getRepair_status() != null) {
+                        if (repair.getRepair_status().equals("Repaired")) {
+                            count = count + 1;
+                        }
+                    }
+                }
+                RepairedDevices.setText(Integer.toString(count));
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Repair>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getDelivered() {
+
+
+        MainClient mainClient = new MainClient();
+        Atlas_Delivery_Interface atlasDeliveryInterface = mainClient.getApiClient().create(Atlas_Delivery_Interface.class);
+
+        Call<List<Atlas_Delivery>> call;
+        call = atlasDeliveryInterface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Delivery>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Delivery>> call, Response<List<Atlas_Delivery>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Atlas_Delivery> atlas_deliveries = response.body();
+
+                int count = 0;
+                for (Atlas_Delivery delivery : atlas_deliveries) {
+
+                    String status = delivery.getDelivery_status();
+
+                    if (status.equals("Delivered")) {
+                        count = count + 1;
+                    }
+                }
+                DeliveredDevice.setText(Integer.toString(count));
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Delivery>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+}

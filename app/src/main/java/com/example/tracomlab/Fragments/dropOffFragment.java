@@ -49,7 +49,7 @@ public class dropOffFragment extends Fragment {
 
         for (int i=0; i< 50; i++){
 
-         Drop_Off_Model model=new Drop_Off_Model("12345678","Engineer Ephantus");
+         Drop_Off_Model model=new Drop_Off_Model("12345678","Engineer Ephantus","","","","");
 
             list.add(model);
 

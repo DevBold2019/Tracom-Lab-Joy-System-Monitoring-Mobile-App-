@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="30dp"
+    android:id="@+id/dashboard"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DashFragment">
 
@@ -13,7 +14,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="20dp"
             android:id="@+id/card1"
             app:cardBackgroundColor="#87CEFA"
@@ -36,6 +37,7 @@
                     android:textColor="#fff"
                     android:padding="8dp"
                     android:textStyle="bold"
+                    android:id="@+id/onboardedDevices"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:text="1400"/>
 
@@ -58,7 +60,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="@color/colorAccent"
             app:cardElevation="6dp"
@@ -81,6 +83,7 @@
                     android:textColor="#fff"
                     android:textStyle="bold"
                     android:padding="8dp"
+                    android:id="@+id/ReceivedDevices"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:text="400"/>
 
@@ -105,7 +108,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="#FFA500"
             app:cardElevation="6dp"
@@ -126,6 +129,7 @@
                     android:textColor="#fff"
                     android:padding="8dp"
                     android:textStyle="bold"
+                    android:id="@+id/ShippedDevices"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:text="40"/>
 
@@ -152,7 +156,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="20dp"
             android:id="@+id/card4"
             app:cardBackgroundColor="#38c172"
@@ -175,6 +179,7 @@
                     android:textStyle="bold"
                     android:padding="8dp"
                     android:gravity="center"
+                    android:id="@+id/RepairedDevices"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:text="300"/>
 
@@ -202,7 +207,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="#3490dc"
             android:id="@+id/delivered"
@@ -228,6 +233,7 @@
                     android:padding="8dp"
                     android:textStyle="bold"
                     android:textSize="14sp"
+                    android:id="@+id/DeliveredDevice"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:text="1400"/>
 

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,13 +48,14 @@ public class Device_History_Fragment extends Fragment {
     DeviceHistory_Model model;
     DeviceHistory_Adapters adapter;
     SearchView searchView;
+    View view;
     LinearLayout linearLayout;
     ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_device__history_, container, false);
+        view = inflater.inflate(R.layout.fragment_device__history_, container, false);
 
         searchView = view.findViewById(R.id.SearchDeviceHistorySearchView);
 
@@ -65,6 +68,8 @@ public class Device_History_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 checkHardware();
+                MainUserInteface mainUserInteface = new MainUserInteface();
+                mainUserInteface.finish();
             }
         });
 
@@ -79,13 +84,9 @@ public class Device_History_Fragment extends Fragment {
     public void checkHardware() {
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
-            Intent intent = new Intent(getActivity(), Scans.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-            intent.putExtra("Device_History_Fragment", "Device_History_Fragment");
+            Intent intent=new Intent(getActivity(), Scans.class);
             startActivity(intent);
-
-            MainUserInteface mainUserInteface = new MainUserInteface();
-            mainUserInteface.finish();
+            getActivity().finish();
         } else {
             Toast.makeText(getActivity(), "your phone can't scan", Toast.LENGTH_SHORT).show();
         }
@@ -119,15 +120,14 @@ public class Device_History_Fragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 recyclerView.setAdapter(adapter);
 
-
-                SharedPreferences pref = getContext().getSharedPreferences("storeMyResult", getActivity().MODE_PRIVATE);
+                SharedPreferences pref = getActivity().getSharedPreferences("storeMyResult", getContext().MODE_PRIVATE);
                 String Search = pref.getString("results", null);
 
                 if (Search != null) {
                     if (Search != "empty") {
 
                         searchView.setIconified(false);
-                        searchView.setQuery(Search, true);
+                        searchView.setQuery(Search, false);
                         searchView.setFocusable(true);
                         searchView.setIconified(false);
                         searchView.requestFocusFromTouch();
@@ -137,9 +137,12 @@ public class Device_History_Fragment extends Fragment {
                         SharedPreferences.Editor prefEdit = pref.edit();
                         prefEdit.clear();
                         prefEdit.apply();
+                    }else if(Search == "empty"){
+                        SharedPreferences.Editor prefEdit = pref.edit();
+                        prefEdit.clear();
+                        prefEdit.apply();
                     }
                 }
-
 
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -168,5 +171,6 @@ public class Device_History_Fragment extends Fragment {
         });
 
     }
+
 
 }

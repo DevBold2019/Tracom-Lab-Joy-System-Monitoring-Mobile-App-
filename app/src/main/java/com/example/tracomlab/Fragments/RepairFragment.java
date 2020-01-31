@@ -1,31 +1,41 @@
 package com.example.tracomlab.Fragments;
 
 
-import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.tracomlab.Adapters.Progress_Adapter;
+
+import com.example.tracomlab.Adapters.Manufacturer_Adapter;
 import com.example.tracomlab.Adapters.Unrepairable_Adapter;
-import com.example.tracomlab.Model_Classes.Progress_Model;
+import com.example.tracomlab.ConnectionToRest.RetrofitClient.MainClient;
+import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Repair_Interface;
+import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Repair;
+import com.example.tracomlab.Model_Classes.Manufacturer_Model;
 import com.example.tracomlab.Model_Classes.Unrepairable_Model;
 import com.example.tracomlab.R;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -33,148 +43,289 @@ import java.util.List;
  */
 public class RepairFragment extends Fragment {
 
-
-    RecyclerView recyclerView,recyclerView1;
-    Unrepairable_Adapter adapter;
-    List<Unrepairable_Model> unrepairableModelList;
+    View view;
+    CardView cardProgress, cardRepair;
+    FloatingActionButton repairBack, progressBack;
+    ConstraintLayout dashRepairPage, progressPage, RepairPage;
+    TableLayout table_progress, table_repair;
+    Context context = null;
+    RecyclerView recyclerView;
+    List<Unrepairable_Model> list;
     Unrepairable_Model model;
-
-    List<Progress_Model>progressModelList;
-  Progress_Adapter progressadapter;
-
-    Button add;
-    Dialog dialog;
-
-    float agents[]={200.1f,100.1f,300.f,200.1f};
-    int [] terminalnumbers ={100, 200 ,500 ,100 };
+    Unrepairable_Adapter adapter;
+    int addCount = 0;
+    TableRow tableRow;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view;
 
-        view=inflater.inflate(R.layout.fragment_repair, container, false);
+        view = inflater.inflate(R.layout.fragment_repair, container, false);
 
+        cardProgress = view.findViewById(R.id.cardProgress);
+        cardRepair = view.findViewById(R.id.cardRepair);
 
-        BarChart bar=view.findViewById(R.id.barchart);
+        progressBack = view.findViewById(R.id.progressBack);
+        repairBack = view.findViewById(R.id.repairBack);
 
+        dashRepairPage = view.findViewById(R.id.dashRepairPage);
+        progressPage = view.findViewById(R.id.progressPage);
+        RepairPage = view.findViewById(R.id.RepairPage);
 
-        List<BarEntry>testingList=new ArrayList<>();
+        table_progress = view.findViewById(R.id.table_progress);
 
-        for (int i=0;  i<terminalnumbers.length; i++){
-
-            testingList.add(new BarEntry(terminalnumbers[i],agents[i]));
-
-        }
-
-        BarDataSet dataset=new BarDataSet(testingList,"POS perfomance");
-        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        BarData data=new BarData(dataset);
-        data.setBarWidth(30.5f);
-
-        bar.setData(data);
-        bar.animateX(2000);
-        bar.animateY(1000);
-        bar.setFitBars(true);
-        bar.invalidate();
-
-
-        dialog=new Dialog(getActivity());
-        dialog.setContentView(R.layout.new_unrepairable_terminal);
-        dialog.setCanceledOnTouchOutside(false);
-
-        add=view.findViewById(R.id.add_new_btn);
-
-
-        recyclerView=view.findViewById(R.id.recyclerView3);
+        recyclerView = view.findViewById(R.id.recyclerViewRepair);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        context = getActivity().getApplicationContext();
 
-        recyclerView1=view.findViewById(R.id.recyclerView);
-        recyclerView1.setHasFixedSize(true);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-     //   recyclerView.scrollToPosition();
-
-
-        //add
-        unrepairableModelList=new ArrayList<>();
-        progressModelList=new ArrayList<>();
-
-        for (int i=0; i <5; i++){
-
-            progressModelList.add(new Progress_Model("KCB","150\t/\t500"));
-
-        }
-
-
-        for (int i=0; i <5; i++){
-
-            model=new Unrepairable_Model("Equity","0110181746327","348282228982892");
-            unrepairableModelList.add(model);
-
-        }
-
-        progressadapter=new Progress_Adapter(getContext(),progressModelList);
-        progressadapter.notifyDataSetChanged();
-        recyclerView1.scrollToPosition(progressModelList.size()-1);
-        recyclerView1.setAdapter(progressadapter);
-
-
-
-
-        add.setOnClickListener(new View.OnClickListener() {
+        cardProgress.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                dialog.show();
-                Button dialogsave=dialog.findViewById(R.id.dialogsavebtn);
-                final EditText bnknm=dialog.findViewById(R.id.dialogBankName);
-                final   EditText serial=dialog.findViewById(R.id.dialogSerialNo);
-                final   EditText part=dialog.findViewById(R.id.dialogPartNo);
-
-
-                dialogsave.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (bnknm.getText().toString().trim().isEmpty() || serial.getText().toString().trim().isEmpty() || part.getText().toString().trim().isEmpty()  ){
-
-                            Toast.makeText(getContext(),"Cant save null values",Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
-                            return;
-                        }
-
-                       Unrepairable_Model model1=new Unrepairable_Model(bnknm.getText().toString(),serial.getText().toString(),part.getText().toString());
-                        unrepairableModelList.add(model1);
-
-                        bnknm.getText().clear();
-                        serial.getText().clear();
-                        part.getText().clear();
-
-                        unrepairableModelList.add(model);
-
-
-                        Toast.makeText(getContext(),"Saved",Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
-                    }
-                });
-
+            public void onClick(View v) {
+                goProgress();
             }
         });
 
-        adapter=new Unrepairable_Adapter(unrepairableModelList,getContext());
-        adapter.notifyDataSetChanged();
-        recyclerView.scrollToPosition(unrepairableModelList.size()-1);
-        recyclerView.setAdapter(adapter);
+        cardRepair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goRepair();
+            }
+        });
 
+        progressBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backProgress();
+            }
+        });
+
+        repairBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backRepair();
+            }
+        });
 
         return view;
     }
 
+    public void goProgress() {
+
+        if (dashRepairPage.getVisibility() == View.VISIBLE) {
+            dashRepairPage.setVisibility(View.GONE);
+            progressPage.setVisibility(View.VISIBLE);
+
+            if(addCount == 0){
+                loadProgressData();
+                addCount = addCount + 1;
+            }else{
+                addCount = addCount + 1;
+            }
+
+        }
+    }
+
+    public void goRepair() {
+
+        if (dashRepairPage.getVisibility() == View.VISIBLE) {
+            dashRepairPage.setVisibility(View.GONE);
+            RepairPage.setVisibility(View.VISIBLE);
+            loadRepairData();
+
+        }
+    }
+
+    public void backProgress() {
+
+        if (dashRepairPage.getVisibility() != View.VISIBLE) {
+            progressPage.setVisibility(View.GONE);
+            dashRepairPage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void backRepair() {
+
+        if (dashRepairPage.getVisibility() != View.VISIBLE) {
+            RepairPage.setVisibility(View.GONE);
+            dashRepairPage.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void loadProgressData() {
+
+        MainClient mainClient = new MainClient();
+        Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
+
+        Call<List<Atlas_Repair>> call;
+        call = repair_interface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Repair>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Repair>> call, Response<List<Atlas_Repair>> response) {
+
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Atlas_Repair> atlas_repairs = response.body();
+
+                Map<String, Integer> pending = new HashMap<>();
+                Map<String, Integer> delivered = new HashMap<>();
+
+                for (Atlas_Repair repair : atlas_repairs) {
+
+                    String ClientName = repair.getCustomers();
+                    String RepairStatus = repair.getRepair_status();
+
+                    if (RepairStatus != null) {
+                        if (RepairStatus.equals("Pending")) {
+
+                            if (pending.keySet().contains(ClientName)) {
+                                pending.put(ClientName, pending.get(ClientName) + 1);
+
+                            } else {
+                                pending.put(ClientName, 1);
+                            }
+
+                        } else {
+
+                            if (delivered.keySet().contains(ClientName)) {
+                                delivered.put(ClientName, delivered.get(ClientName) + 1);
+
+                            } else {
+                                delivered.put(ClientName, 1);
+                            }
+                        }
+                    }
+
+                }
+
+                int i = 1;
+
+                for (Map.Entry<String, Integer> deliveryList : delivered.entrySet()) {
 
 
+                    for (Map.Entry<String, Integer> pendingList : pending.entrySet()) {
 
+                        if (deliveryList.getKey().equalsIgnoreCase(pendingList.getKey())) {
+                            tableRow = new TableRow(context);
+
+                            if (i % 2 == 0) {
+                                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                                tableRow.setLayoutParams(layoutParams);
+
+                                String sum = Integer.toString(pendingList.getValue() + deliveryList.getValue());
+                                String delv = Integer.toString(deliveryList.getValue());
+
+                                TextView textCustomer = new TextView(getContext());
+                                textCustomer.setTextColor(getResources().getColor(R.color.colorWhite));
+                                textCustomer.setBackgroundResource(R.drawable.cellrowheader);
+                                textCustomer.setGravity(Gravity.LEFT);
+                                textCustomer.setText(deliveryList.getKey());
+                                tableRow.addView(textCustomer, 0);
+
+                                TextView textm = new TextView(getContext());
+                                textm.setTextColor(getResources().getColor(R.color.colorWhite));
+                                textm.setBackgroundResource(R.drawable.cellrowheader);
+                                textm.setGravity(Gravity.RIGHT);
+                                textm.setText(delv + "/" + sum);
+                                tableRow.addView(textm, 1);
+
+                                table_progress.addView(tableRow);
+
+                                i = i + 1;
+                            } else {
+                                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                                tableRow.setLayoutParams(layoutParams);
+
+                                String sum = Integer.toString(pendingList.getValue() + deliveryList.getValue());
+                                String delv = Integer.toString(deliveryList.getValue());
+
+                                TextView textCustomer = new TextView(getContext());
+                                textCustomer.setTextColor(getResources().getColor(R.color.colorBackground));
+                                textCustomer.setBackgroundResource(R.drawable.cellrowbody);
+                                textCustomer.setGravity(Gravity.LEFT);
+                                textCustomer.setText(deliveryList.getKey());
+                                tableRow.addView(textCustomer, 0);
+
+                                TextView Count = new TextView(getContext());
+                                Count.setTextColor(getResources().getColor(R.color.colorBackground));
+                                Count.setBackgroundResource(R.drawable.cellrowbody);
+                                Count.setGravity(Gravity.RIGHT);
+                                Count.setText(delv + "/" + sum);
+                                tableRow.addView(Count, 1);
+
+                                table_progress.addView(tableRow);
+
+                                i = i + 1;
+                            }
+
+                        }
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Repair>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void loadRepairData() {
+
+        MainClient mainClient = new MainClient();
+        Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
+
+        list = new ArrayList<>();
+
+        Call<List<Atlas_Repair>> call;
+        call = repair_interface.getFullList();
+
+        call.enqueue(new Callback<List<Atlas_Repair>>() {
+            @Override
+            public void onResponse(Call<List<Atlas_Repair>> call, Response<List<Atlas_Repair>> response) {
+
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                List<Atlas_Repair> atlas_repairs = response.body();
+
+
+                for (Atlas_Repair repair : atlas_repairs) {
+
+                    String customer = repair.getCustomers();
+                    String serial = repair.getSerial_number();
+                    String batch = repair.getBatch_number();
+                    String status = repair.getRepair_status();
+
+                    if (status != null) {
+                        if (status.equals("Pending")) {
+
+                            model = new Unrepairable_Model(customer, serial, batch);
+                            list.add(model);
+                        }
+                    }
+                }
+                adapter = new Unrepairable_Adapter(list, getContext());
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Atlas_Repair>> call, Throwable t) {
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
