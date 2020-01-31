@@ -1,6 +1,9 @@
 package com.example.tracomlab.Fragments;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,15 +56,45 @@ public class OrdersFragment extends Fragment {
 
         textView = view.findViewById(R.id.OrderID);
 
-
         list = new ArrayList<>();
         adapter = new Pick_Up_Adapter(list, getContext());
+
+
+        checkForNetwork();
+
+
+
+        return view;
+
+    }
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+
+            populateOrders();
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+    private void populateOrders() {
 
         MainClient mainClient = new MainClient();
         Atlas_Orders_Interface orders_interface = mainClient.getApiClient().create(Atlas_Orders_Interface.class);
 
         Call<List<Atlas_Orders>> call;
         call = orders_interface.getFullList();
+
 
         call.enqueue(new Callback<List<Atlas_Orders>>() {
             @Override
@@ -127,8 +160,13 @@ public class OrdersFragment extends Fragment {
             }
         });
 
-        return view;
+
+
+
+
+
 
     }
+
 
 }

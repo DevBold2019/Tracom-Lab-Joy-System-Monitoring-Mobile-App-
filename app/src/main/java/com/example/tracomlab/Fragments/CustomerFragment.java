@@ -1,6 +1,9 @@
 package com.example.tracomlab.Fragments;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,11 +50,44 @@ public class CustomerFragment extends Fragment {
         list=new ArrayList<>();
 
 
+        checkForNetwork();
+
+
+
+
+        return view;
+
+    }
+
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+            loadCustomers();
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+
+
+    private void loadCustomers(){
+
         MainClient mainClient = new MainClient();
         Atlas_Customers_Interface atlasCustomersInterface = mainClient.getApiClient().create(Atlas_Customers_Interface.class);
 
         Call<List<Atlas_Customers>> call;
         call = atlasCustomersInterface.getFullList();
+
 
         call.enqueue(new Callback<List<Atlas_Customers>>() {
             @Override
@@ -86,7 +122,7 @@ public class CustomerFragment extends Fragment {
             }
         });
 
-        return view;
+
     }
 
 }

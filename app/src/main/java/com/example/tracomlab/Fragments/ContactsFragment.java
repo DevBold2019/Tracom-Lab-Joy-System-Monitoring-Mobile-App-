@@ -1,7 +1,10 @@
 package com.example.tracomlab.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,11 +58,41 @@ public class ContactsFragment extends Fragment {
 
         list=new ArrayList<>();
 
+       checkForNetwork();
+
+
+        return view;
+    }
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+          loadContacts();
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+
+
+
+    private void loadContacts(){
+
         Ufs_User_Client ufs_user_client = new Ufs_User_Client();
         Ufs_User_Interface ufs_user_interface = ufs_user_client.getApiClient().create(Ufs_User_Interface.class);
 
         Call<List<Ufs_User_Model>> called;
         called = ufs_user_interface.getFullList();
+
 
         called.enqueue(new Callback<List<Ufs_User_Model>>() {
             @Override
@@ -144,7 +177,12 @@ public class ContactsFragment extends Fragment {
             }
         });
 
-        return view;
+
+
+
+
+
     }
+
 
 }

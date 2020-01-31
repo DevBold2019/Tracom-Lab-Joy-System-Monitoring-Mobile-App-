@@ -2,6 +2,8 @@ package com.example.tracomlab.Fragments;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,9 +63,35 @@ public class DeliveryFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(false);
 
-
         list = new ArrayList<>();
 
+
+        checkForNetwork();
+
+
+        return view;
+    }
+
+
+
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+            LoadDelivery();
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+    public void LoadDelivery(){
 
         MainClient mainClient = new MainClient();
         Atlas_Delivery_Interface atlasDeliveryInterface = mainClient.getApiClient().create(Atlas_Delivery_Interface.class);
@@ -89,19 +117,21 @@ public class DeliveryFragment extends Fragment {
                     list.add(model);
                 }
 
-                    adapter = new Drop_Off_Adapter(list, getContext());
-                    adapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(adapter);
-                }
+                adapter = new Drop_Off_Adapter(list, getContext());
+                adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
+            }
 
-                @Override
-                public void onFailure (Call < List < Atlas_Delivery >> call, Throwable t){
-                    Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            @Override
+            public void onFailure (Call < List < Atlas_Delivery >> call, Throwable t){
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
-        return view;
+
+
+
     }
 
 

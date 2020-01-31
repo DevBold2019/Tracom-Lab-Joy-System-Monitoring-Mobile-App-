@@ -1,9 +1,13 @@
 package com.example.tracomlab.Fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,23 +44,32 @@ import retrofit2.Response;
 public class DashFragment extends Fragment {
 
     private PieChart PieChart;
-    TextView onboardedDevices, ReceivedDevices, ShippedDevices, RepairedDevices, DeliveredDevice;
+   private TextView onboardedDevices, ReceivedDevices, ShippedDevices, RepairedDevices, DeliveredDevice;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view;
 
         view = inflater.inflate(R.layout.fragment_dash, container, false);
 
         PieChart = view.findViewById(R.id.summaryPie);
-
         onboardedDevices = view.findViewById(R.id.onboardedDevices);
         ReceivedDevices = view.findViewById(R.id.ReceivedDevices);
         ShippedDevices = view.findViewById(R.id.ShippedDevices);
         RepairedDevices = view.findViewById(R.id.RepairedDevices);
         DeliveredDevice = view.findViewById(R.id.DeliveredDevice);
 
+
+        checkForNetwork();
+
+
+
+        return view;
+
+    }
+
+    //Getting Generate Data to Pie chart Devices
+    private void loadDataToPieChart(){
 
         final List<PieEntry> testingList = new ArrayList<>();
 
@@ -69,8 +82,11 @@ public class DashFragment extends Fragment {
         call.enqueue(new Callback<List<Atlas_Repair>>() {
             @Override
             public void onResponse(Call<List<Atlas_Repair>> call, Response<List<Atlas_Repair>> response) {
+
+                //If response is not Sucessfull then A message should Appear
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "" + response.code(), Toast.LENGTH_LONG).show();
+
                     return;
                 }
 
@@ -83,40 +99,50 @@ public class DashFragment extends Fragment {
 
                 for (Atlas_Repair atlasRepair : atlas_repairs) {
 
+                    //Getting data from the model class
                     String setLevel = atlasRepair.getLevels();
                     String setTestResults = atlasRepair.getQa_test_status();
                     String setRepairedStatus = atlasRepair.getRepair_status();
 
 
                     if (setRepairedStatus != null && setRepairedStatus.equals("Repaired")) {
+
                         if (setTestResults != null && setTestResults.equals("Failed")) {
+
                             if (setLevel != null && setLevel.equals("LEVEL 1")) {
                                 level_one = level_one + 1;
-                            } else if (setLevel != null && setLevel.equals("LEVEL 2")) {
+                            }
+                            else if (setLevel != null && setLevel.equals("LEVEL 2")) {
                                 level_two = level_two + 1;
-                            } else if (setLevel != null && setLevel.equals("LEVEL 3")) {
+                            }
+                            else if (setLevel != null && setLevel.equals("LEVEL 3")) {
                                 level_three = level_three + 1;
-                            } else if (setLevel != null && setLevel.equals("LEVEL 4")) {
+                            }
+                            else if (setLevel != null && setLevel.equals("LEVEL 4")) {
                                 level_four = level_four + 1;
                             }
                         }
+
                     } else if (setRepairedStatus != null && setRepairedStatus.equals("Pending")) {
+
                         if (setLevel != null && setLevel.equals("LEVEL 1")) {
                             level_one = level_one + 1;
-                        } else if (setLevel != null && setLevel.equals("LEVEL 2")) {
+                        }
+                        else if (setLevel != null && setLevel.equals("LEVEL 2")) {
                             level_two = level_two + 1;
-                        } else if (setLevel != null && setLevel.equals("LEVEL 3")) {
+                        }
+                        else if (setLevel != null && setLevel.equals("LEVEL 3")) {
                             level_three = level_three + 1;
-                        } else if (setLevel != null && setLevel.equals("LEVEL 4")) {
+                        }
+                        else if (setLevel != null && setLevel.equals("LEVEL 4")) {
                             level_four = level_four + 1;
                         }
                     }
 
-                    //populate the pie chart
-
-
                 }
 
+
+                //populate the pie chart with Data got from the API call
                 int[] terminalNumbers = {(int) level_one, (int) level_two, (int) level_three, (int) level_four};
                 String[] Levels = {"Level 1", "Level 2", "Level 3", "Level 4"};
 
@@ -131,7 +157,7 @@ public class DashFragment extends Fragment {
 
                 PieData data = new PieData(dataSet);
                 PieChart.setData(data);
-                PieChart.animateX(2000);
+                PieChart.animateX(3000);
                 PieChart.invalidate();
                 //populate the pie chart
             }
@@ -143,17 +169,11 @@ public class DashFragment extends Fragment {
             }
         });
 
-        getShipped();
-        getDelivered();
-        getOnboard();
-        getRepaired();
-        getReceived();
-
-        return view;
 
     }
 
-    public void getOnboard() {
+    //Getting Onboarded Devices
+    private void getOnboardedDevices() {
 
         MainClient mainClient = new MainClient();
         Atlas_Devices_Interface atlasDevicesInterface = mainClient.getApiClient().create(Atlas_Devices_Interface.class);
@@ -182,7 +202,8 @@ public class DashFragment extends Fragment {
 
     }
 
-    public void getReceived() {
+    //Getting Received Devices
+    private void getReceivedDevices() {
         MainClient mainClient = new MainClient();
         Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
 
@@ -212,7 +233,8 @@ public class DashFragment extends Fragment {
         });
     }
 
-    public void getShipped() {
+    //Getting Shipped Devices
+    private void getShippedDevices() {
 
         MainClient mainClient = new MainClient();
         Atlas_Shipped_Interface shipped_interface = mainClient.getApiClient().create(Atlas_Shipped_Interface.class);
@@ -244,7 +266,8 @@ public class DashFragment extends Fragment {
 
     }
 
-    public void getRepaired() {
+    //Getting Repaired Devices
+    private void getRepairedDevices() {
 
         MainClient mainClient = new MainClient();
         Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
@@ -280,7 +303,8 @@ public class DashFragment extends Fragment {
         });
     }
 
-    public void getDelivered() {
+    //Getting Delivered Devices
+    private void getDeliveredDevices() {
 
 
         MainClient mainClient = new MainClient();
@@ -316,6 +340,30 @@ public class DashFragment extends Fragment {
                 Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+            loadDataToPieChart();
+            getDeliveredDevices();
+            getOnboardedDevices();
+            getReceivedDevices();
+            getShippedDevices();
+            getRepairedDevices();
+
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
     }
 
 }
