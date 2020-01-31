@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -36,6 +38,7 @@ import com.google.zxing.client.android.Intents;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,24 +78,31 @@ public class Device_History_Fragment extends Fragment {
 
         list = new ArrayList<>();
 
-        loadFromApi();
+        checkForNetwork();
+
 
         return view;
 
     }
 
-    public void checkHardware() {
+    //Checking if Device can Support Scanning
+    //If the Device supports Scanning The scanner is launched
+    private void checkHardware() {
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+
         if (currentapiVersion >= android.os.Build.VERSION_CODES.M) {
+
             Intent intent=new Intent(getActivity(), Scans.class);
+
             startActivity(intent);
-            getActivity().finish();
+            Objects.requireNonNull(getActivity()).finish();
+
         } else {
             Toast.makeText(getActivity(), "your phone can't scan", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void loadFromApi() {
+    private void loadFromApi() {
         MainClient mainClient = new MainClient();
         Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
         Call<List<Atlas_Repair>> call;
@@ -170,6 +180,24 @@ public class Device_History_Fragment extends Fragment {
             }
         });
 
+    }
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+            loadFromApi();
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
     }
 
 

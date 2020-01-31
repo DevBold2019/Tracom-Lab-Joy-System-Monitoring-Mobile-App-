@@ -1,6 +1,5 @@
 package com.example.tracomlab.Fragments;
 
-
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
@@ -29,9 +28,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class Scanner extends Fragment implements ZXingScannerView.ResultHandler {
 
     private static final int REQUEST_CAMERA = 1;
@@ -65,12 +62,7 @@ public class Scanner extends Fragment implements ZXingScannerView.ResultHandler 
                 requestPermission();
             }
         }
-//        scannerView = new ZXingScannerView(getActivity().getApplicationContext());
-//
-//        scannerView.setLayoutParams(new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.MATCH_PARENT,
-//                LinearLayout.LayoutParams.MATCH_PARENT));
-//        scan_launch.addView(scannerView);
+
 
         return view;
     }

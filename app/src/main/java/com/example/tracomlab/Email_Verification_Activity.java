@@ -68,4 +68,15 @@ public class Email_Verification_Activity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.go_up_animation,R.anim.go_down_animation);
+        Intent intent = new Intent(Email_Verification_Activity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -2,6 +2,8 @@ package com.example.tracomlab.Fragments;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -109,10 +111,14 @@ public class RepairFragment extends Fragment {
             }
         });
 
+        checkForNetwork();
+
+
+
         return view;
     }
 
-    public void goProgress() {
+    private void goProgress() {
 
         if (dashRepairPage.getVisibility() == View.VISIBLE) {
             dashRepairPage.setVisibility(View.GONE);
@@ -128,7 +134,7 @@ public class RepairFragment extends Fragment {
         }
     }
 
-    public void goRepair() {
+    private void goRepair() {
 
         if (dashRepairPage.getVisibility() == View.VISIBLE) {
             dashRepairPage.setVisibility(View.GONE);
@@ -138,7 +144,7 @@ public class RepairFragment extends Fragment {
         }
     }
 
-    public void backProgress() {
+    private void backProgress() {
 
         if (dashRepairPage.getVisibility() != View.VISIBLE) {
             progressPage.setVisibility(View.GONE);
@@ -146,7 +152,7 @@ public class RepairFragment extends Fragment {
         }
     }
 
-    public void backRepair() {
+    private void backRepair() {
 
         if (dashRepairPage.getVisibility() != View.VISIBLE) {
             RepairPage.setVisibility(View.GONE);
@@ -154,7 +160,7 @@ public class RepairFragment extends Fragment {
         }
     }
 
-    public void loadProgressData() {
+    private void loadProgressData() {
 
         MainClient mainClient = new MainClient();
         Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
@@ -279,7 +285,7 @@ public class RepairFragment extends Fragment {
         });
     }
 
-    public void loadRepairData() {
+    private void loadRepairData() {
 
         MainClient mainClient = new MainClient();
         Atlas_Repair_Interface repair_interface = mainClient.getApiClient().create(Atlas_Repair_Interface.class);
@@ -328,4 +334,31 @@ public class RepairFragment extends Fragment {
         });
 
     }
+
+
+    //For connectivity check if the  wifi/network is connected to the internet
+    private boolean checkForNetwork() {
+
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        //if there's network we want to load more data
+        if (netInfo != null &&  netInfo.isConnectedOrConnecting()) {
+
+
+            goProgress();
+            goProgress();
+            backProgress();
+            backRepair();
+            loadRepairData();
+
+
+            return true;
+        }
+        Toast.makeText(getContext(),"Check your network",Toast.LENGTH_LONG).show();
+
+        return false;
+    }
+
+
 }
