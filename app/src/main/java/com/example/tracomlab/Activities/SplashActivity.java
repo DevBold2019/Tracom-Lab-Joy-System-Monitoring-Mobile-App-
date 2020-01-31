@@ -1,4 +1,4 @@
-package com.example.tracomlab;
+package com.example.tracomlab.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.tracomlab.Fragments.Kidole_Option;
+import com.example.tracomlab.R;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

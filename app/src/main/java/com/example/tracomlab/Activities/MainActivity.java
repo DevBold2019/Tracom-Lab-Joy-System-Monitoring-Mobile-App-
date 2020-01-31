@@ -1,9 +1,7 @@
-package com.example.tracomlab;
+package com.example.tracomlab.Activities;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.Activity;
@@ -20,20 +18,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tracomlab.ConnectionToRest.RetrofitClient.ServiceGenerator;
 import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Ufs_Authentication_Interface;
 import com.example.tracomlab.ConnectionToRest.RetrofitModel.Ufs_Authentication_Model;
+import com.example.tracomlab.OTP_Activities.Email_Verification_Activity;
+import com.example.tracomlab.R;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -272,7 +268,7 @@ public class MainActivity extends Activity {
 
     public void GetOtp(View view) {
 
-        Intent intent=new Intent(MainActivity.this,Email_Verification_Activity.class);
+        Intent intent=new Intent(MainActivity.this, Email_Verification_Activity.class);
         startActivity(intent);
         finish();
 

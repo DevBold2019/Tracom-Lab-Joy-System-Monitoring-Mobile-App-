@@ -1,4 +1,4 @@
-package com.example.tracomlab;
+package com.example.tracomlab.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -14,13 +14,10 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tracomlab.Fragments.ContactsFragment;
 import com.example.tracomlab.Fragments.CustomerFragment;
@@ -33,6 +30,7 @@ import com.example.tracomlab.Fragments.ManufacturerFragment;
 import com.example.tracomlab.Fragments.OrdersFragment;
 import com.example.tracomlab.Fragments.RepairFragment;
 import com.example.tracomlab.Fragments.parts_History_Fragment;
+import com.example.tracomlab.R;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.BufferedReader;

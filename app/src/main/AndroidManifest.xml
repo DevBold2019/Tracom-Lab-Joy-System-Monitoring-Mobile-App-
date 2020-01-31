@@ -23,13 +23,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="stateHidden">
-        <activity android:name=".Email_Verification_Activity"></activity>
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".OneTimePasswordActivity" />
+        <activity android:name=".OTP_Activities.Email_Verification_Activity"></activity>
+        <activity android:name=".OTP_Activities.ResetPasswordActivity" />
+        <activity android:name=".OTP_Activities.OneTimePasswordActivity" />
         <activity android:name=".scanner.Scans" />
-        <activity android:name=".MainUserInteface" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".Activities.MainUserInteface" />
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

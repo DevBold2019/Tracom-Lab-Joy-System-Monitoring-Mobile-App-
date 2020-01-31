@@ -1,4 +1,4 @@
-package com.example.tracomlab;
+package com.example.tracomlab.OTP_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -20,6 +20,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.tracomlab.Activities.MainActivity;
+import com.example.tracomlab.R;
 import com.goodiebag.pinview.Pinview;
 
 public class OneTimePasswordActivity extends AppCompatActivity {

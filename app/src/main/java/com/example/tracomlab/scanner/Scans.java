@@ -3,9 +3,7 @@ package com.example.tracomlab.scanner;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,13 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.tracomlab.Fragments.DashFragment;
-import com.example.tracomlab.Fragments.Device_History_Fragment;
-import com.example.tracomlab.MainUserInteface;
+import com.example.tracomlab.Activities.MainUserInteface;
 import com.example.tracomlab.R;
 import com.google.zxing.Result;
-
-import java.util.Objects;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 

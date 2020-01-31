@@ -1,7 +1,5 @@
 package com.example.tracomlab.Fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,17 +18,13 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.tracomlab.Adapters.DeviceHistory_Adapters;
-import com.example.tracomlab.Adapters.Devices_Adapter;
-import com.example.tracomlab.Adapters.Inventory_Adapter;
 import com.example.tracomlab.ConnectionToRest.RetrofitClient.MainClient;
 import com.example.tracomlab.ConnectionToRest.RetrofitInterface.Atlas_Repair_Interface;
 import com.example.tracomlab.ConnectionToRest.RetrofitModel.Atlas_Repair;
-import com.example.tracomlab.MainUserInteface;
+import com.example.tracomlab.Activities.MainUserInteface;
 import com.example.tracomlab.Model_Classes.DeviceHistory_Model;
-import com.example.tracomlab.Model_Classes.Devices_Model;
 import com.example.tracomlab.R;
 import com.example.tracomlab.scanner.Scans;
-import com.google.zxing.client.android.Intents;
 
 import java.util.ArrayList;
 import java.util.List;

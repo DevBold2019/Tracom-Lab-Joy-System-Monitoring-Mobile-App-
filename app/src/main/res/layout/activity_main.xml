@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="#375A8E"
     android:focusableInTouchMode="true"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <ScrollView
         android:layout_width="match_parent"

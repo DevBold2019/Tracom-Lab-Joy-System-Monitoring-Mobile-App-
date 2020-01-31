@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
 import android.security.keystore.KeyGenParameterSpec;
@@ -29,8 +28,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.tracomlab.KidoleOption_Source.FingerprintHandler;
-import com.example.tracomlab.MainActivity;
-import com.example.tracomlab.MainUserInteface;
+import com.example.tracomlab.Activities.MainActivity;
+import com.example.tracomlab.Activities.MainUserInteface;
 import com.example.tracomlab.R;
 
 import java.io.IOException;

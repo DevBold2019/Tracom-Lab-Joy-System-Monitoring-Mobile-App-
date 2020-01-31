@@ -1,4 +1,4 @@
-package com.example.tracomlab;
+package com.example.tracomlab.OTP_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.tracomlab.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Email_Verification_Activity extends AppCompatActivity {
@@ -31,19 +32,24 @@ public class Email_Verification_Activity extends AppCompatActivity {
 
                String getEmail = textInputLayout.getEditText().getText().toString();
 
-               if ( textInputLayout.getEditText().getText().toString() != null){
+               if ( textInputLayout.getEditText().getText().toString().trim().isEmpty()){
 
-                   Toast.makeText(Email_Verification_Activity.this,""+getEmail,Toast.LENGTH_LONG).show();
 
-                   Intent intent=new Intent(Email_Verification_Activity.this,OneTimePasswordActivity.class);
-                   startActivity(intent);
-                   finish();
+                   textInputLayout.getEditText().setError("");
+
+                   Toast.makeText(Email_Verification_Activity.this,"Can't send Email on \n Null Email Address",Toast.LENGTH_LONG).show();
+                   textInputLayout.getEditText().setError("Blank Email");
+
 
                    return;
                }
 
-               Toast.makeText(Email_Verification_Activity.this,"Can't send Email on \n Null Email Address",Toast.LENGTH_LONG).show();
-               textInputLayout.getEditText().setError("Blank Email");
+               Toast.makeText(Email_Verification_Activity.this,""+getEmail,Toast.LENGTH_LONG).show();
+
+               Intent intent = new Intent(Email_Verification_Activity.this, OneTimePasswordActivity.class);
+               startActivity(intent);
+               finish();
+
 
 
 
