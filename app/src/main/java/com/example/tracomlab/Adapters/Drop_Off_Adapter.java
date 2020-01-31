@@ -50,9 +50,18 @@ public class Drop_Off_Adapter extends RecyclerView.Adapter<Drop_Off_Adapter.view
 
             holder.t1.setText(model.getCustomerName());
             holder.t2.setText(model.getDeliveredStatus());
+            holder.t3.setText(model.getDate());
+            holder.t4.setText(model.getLocation());
+            holder.t5.setText(model.getPerson());
+            holder.t6.setText(model.getSerialNumber());
+
+            if(model.getDeliveredStatus().equals("Delivered")){
+                holder.t2.setBackgroundResource(R.drawable.blue_btn);
+            }else if(model.getDeliveredStatus().equals("Pending")){
+                holder.t2.setBackgroundResource(R.drawable.badred);
+            }
 
 
-        Glide.with(context).load(R.drawable.downbuttonpx).into(holder.imageView);
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +95,7 @@ public class Drop_Off_Adapter extends RecyclerView.Adapter<Drop_Off_Adapter.view
 
     public class viewholder extends RecyclerView.ViewHolder {
 
-        TextView t1, t2, t3, t4, t5;
+        TextView t1, t2, t3, t4, t5,t6;
         LinearLayout linearLayout;
         ImageView imageView;
 
@@ -95,6 +104,11 @@ public class Drop_Off_Adapter extends RecyclerView.Adapter<Drop_Off_Adapter.view
 
             t1 = itemView.findViewById(R.id.CustomerName);
             t2 = itemView.findViewById(R.id.DeliveredStatus);
+            t3 = itemView.findViewById(R.id.dropDate);
+            t4 = itemView.findViewById(R.id.dropLocation);
+            t5 = itemView.findViewById(R.id.dropDelivered);
+            t6 = itemView.findViewById(R.id.dropSerial);
+
 
             imageView = itemView.findViewById(R.id.moreDetailsDeliveryButton);
             linearLayout = itemView.findViewById(R.id.moreDetailsRepair);

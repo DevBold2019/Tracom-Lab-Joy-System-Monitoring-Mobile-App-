@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.tracomlab.Fragments.DashFragment;
 import com.example.tracomlab.Fragments.Device_History_Fragment;
+import com.example.tracomlab.MainActivity;
 import com.example.tracomlab.MainUserInteface;
 import com.example.tracomlab.R;
 import com.google.zxing.Result;
@@ -94,11 +95,10 @@ public class Scans extends AppCompatActivity implements ZXingScannerView.ResultH
                 .putString("results", myResult)
                 .apply();
 
-        Intent intent = new Intent(this, MainUserInteface.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-        startActivity(intent);
 
-        this.finish();
+        Intent intent=new Intent(this, MainUserInteface.class);
+        startActivity(intent);
+        finish();
 
     }
 
@@ -112,9 +112,18 @@ public class Scans extends AppCompatActivity implements ZXingScannerView.ResultH
     public void onBackPressed() {
         super.onBackPressed();
 
+        getSharedPreferences("scanDevice", Context.MODE_PRIVATE)
+                .edit()
+                .putString("nameHistory", "DeviceHistory")
+                .apply();
+
         getSharedPreferences("storeMyResult", Context.MODE_PRIVATE)
                 .edit()
                 .putString("results", "empty")
                 .apply();
+
+        Intent intent=new Intent(this, MainUserInteface.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -183,6 +183,11 @@ public class MainUserInteface extends AppCompatActivity implements NavigationVie
 
                 case R.id.devicesHistoryMenu:
 
+                    getSharedPreferences("storeMyResult", Context.MODE_PRIVATE)
+                            .edit()
+                            .putString("results", "empty")
+                            .apply();
+
                     Objects.requireNonNull(getSupportActionBar()).setTitle("Devices History");
                     getSupportFragmentManager().beginTransaction().replace(R.id.Container, new Device_History_Fragment()).commit();
 

@@ -54,9 +54,6 @@
         android:title="Reports" >
         <menu>
             <item
-                android:title="Device Report"
-                android:icon="@drawable/businesseport"/>
-            <item
                 android:title="Device history"
                 android:id="@+id/devicesHistoryMenu"
                 android:icon="@drawable/activityhistory" />
