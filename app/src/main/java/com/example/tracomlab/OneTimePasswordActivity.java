@@ -70,6 +70,7 @@ public class OneTimePasswordActivity extends AppCompatActivity {
                     verifyOTP();
                     Toast.makeText(OneTimePasswordActivity.this,"OTP  is \t"+pinview.getValue(),Toast.LENGTH_LONG).show();
 
+
                     return;
 
                 }
