@@ -54,22 +54,22 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
 
     public  void confirmPassword(){
-        dialog.show();
-        dialog.setMessage("A  while.....");
+                dialog.show();
+                dialog.setMessage("A  while.....");
 
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
+                Handler handler=new Handler();
+                handler.postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-
-
-                Intent intent=new Intent(ResetPasswordActivity.this, MainUserInteface.class);
-                startActivity(intent);
-                finish();
+                    @Override
+                    public void run() {
 
 
-            }
+                        Intent intent=new Intent(ResetPasswordActivity.this, MainUserInteface.class);
+                        startActivity(intent);
+                        finish();
+
+
+                    }
         },4000);
 
 

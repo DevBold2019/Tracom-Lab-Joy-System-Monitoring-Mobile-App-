@@ -37,28 +37,27 @@ public class Email_Verification_Activity extends AppCompatActivity {
         textInputLayout = findViewById(R.id.recoveryTextInput);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String getEmail = textInputLayout.getEditText().getText().toString();
-
-                if (textInputLayout.getEditText().getText().toString().trim().isEmpty()) {
 
 
-                    textInputLayout.getEditText().setError("");
+        button.setOnClickListener(view -> {
 
-                    Toast.makeText(Email_Verification_Activity.this, "Can't send Email on \n Null Email Address", Toast.LENGTH_LONG).show();
-                    textInputLayout.getEditText().setError("Blank Email");
+            String getEmail = textInputLayout.getEditText().getText().toString();
 
-                    return;
-                } else {
-                    checkEmail();
+            if (textInputLayout.getEditText().getText().toString().trim().isEmpty()) {
 
-                }
 
+                textInputLayout.getEditText().setError("");
+
+                Toast.makeText(Email_Verification_Activity.this, "Can't send Email on \n Null Email Address", Toast.LENGTH_LONG).show();
+                textInputLayout.getEditText().setError("Blank Email");
+
+                return;
+            } else {
+                checkEmail();
 
             }
+
+
         });
 
 

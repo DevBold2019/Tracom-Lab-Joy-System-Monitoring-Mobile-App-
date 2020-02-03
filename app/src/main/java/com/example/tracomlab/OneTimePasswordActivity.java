@@ -52,9 +52,7 @@ public class OneTimePasswordActivity extends AppCompatActivity {
 
 
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        button.setOnClickListener(view->{
 
                 if (pinview.getValue().trim() == null){
 
@@ -77,7 +75,7 @@ public class OneTimePasswordActivity extends AppCompatActivity {
 
                 Toast.makeText(OneTimePasswordActivity.this,"OTP  appears To be Invalid \t"+pinview.getValue(),Toast.LENGTH_LONG).show();
 
-            }
+
         });
 
         textView.setOnClickListener(new View.OnClickListener() {

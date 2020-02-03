@@ -24,7 +24,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
-            app:cardBackgroundColor="#87CEFA"
+            app:cardBackgroundColor="#22146A"
             app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
+                android:gravity="center"
                 android:orientation="vertical">
 
 
@@ -41,17 +42,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:padding="8dp"
                     android:text="SHOW"
                     android:textAlignment="center"
                     android:textColor="#fff"
+                    android:textSize="24dp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:padding="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
                     android:text="Lab Progress"
                     android:textAlignment="center"
                     android:textColor="#fff"
@@ -78,6 +81,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical">
 
 
@@ -85,10 +89,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:padding="8dp"
                     android:text="SHOW"
                     android:textAlignment="center"
                     android:textColor="#fff"
+                    android:textSize="24dp"
                     android:textStyle="bold" />
 
 
@@ -96,7 +100,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:padding="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
                     android:text="Devices on Repair"
                     android:textAlignment="center"
                     android:textColor="#fff"
@@ -154,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/cellrowheader"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:text="Client Name"
                         android:textColor="#fff" />
 
@@ -164,7 +170,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/cellrowheader"
                         android:gravity="end"
-                        android:padding="5dp"
+                        android:padding="10dp"
                         android:text="Lab Progress"
                         android:textColor="#fff" />
                 </TableRow>

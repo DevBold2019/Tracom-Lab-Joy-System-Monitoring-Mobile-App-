@@ -88,16 +88,21 @@ public class MainActivity extends Activity {
 
             if (!fingerprintManager.isHardwareDetected()) {
                 RememberMeKidole.setEnabled(false);
+                RememberMeKidole.setVisibility(View.GONE);
             } else if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 RememberMeKidole.setEnabled(false);
+                RememberMeKidole.setVisibility(View.GONE);
             } else if (!keyguardManager.isKeyguardSecure()) {
                 RememberMeKidole.setEnabled(false);
+                RememberMeKidole.setVisibility(View.GONE);
             } else if (!fingerprintManager.hasEnrolledFingerprints()) {
                 RememberMeKidole.setEnabled(false);
+                RememberMeKidole.setVisibility(View.GONE);
             }
 
         } else {
             RememberMeKidole.setEnabled(false);
+            RememberMeKidole.setVisibility(View.GONE);
         }
 
     }
@@ -160,13 +165,17 @@ public class MainActivity extends Activity {
                     checkRadioButtons();
 
 
+                }else if(response.code() == 400){
+                    progressDialog.setMessage("wrong username or email");
+                    progressDialog.dismiss();
+
+
                 } else {
 
                     isNetworkActive();
-
-                    Toast.makeText(getApplication(), "" + response.code(), Toast.LENGTH_SHORT).show();
                     progressDialog.setTitle("An error occurred");
                     progressDialog.setMessage(""+response.code());
+                    progressDialog.dismiss();
 
                 }
             }
