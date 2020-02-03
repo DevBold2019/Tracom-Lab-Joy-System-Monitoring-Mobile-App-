@@ -20,6 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:layout_height="match_parent">
 
 
@@ -61,6 +63,8 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:hint="Enter Email"
+                            android:textSize="14dp"
+                            android:textColorHint="#fff"
                             android:textColor="@color/colorWhite"
                             android:inputType="textEmailAddress" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -80,6 +84,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:hint="Enter Password"
+                            android:textSize="14dp"
                             android:textColorHint="#fff"
                             android:inputType="textPassword"
                             android:textColor="@color/colorWhite" />
@@ -89,18 +94,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Forgot Password ?"
-                        android:onClick="GetOtp"
-                        android:textColor="#fff"
                         android:layout_gravity="end"
-                        android:padding="10dp"/>
+                        android:onClick="GetOtp"
+                        android:padding="10dp"
+                        android:text="Forgot Password ?"
+                        android:textColor="#fff"
+                        android:visibility="gone" />
 
                     <RadioGroup
                         android:id="@+id/RemMeRadioGroup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:layout_margin="10dp">
+                        >
 
                         <RadioButton
                             android:id="@+id/RememberMeKidole"
@@ -108,7 +114,8 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:buttonTint="@color/colorWhite"
-                            android:text="Use fingerPrint recognition next time"
+                            android:text="Use fingerPrint"
+                            android:textSize="13dp"
                             android:textColor="@color/colorWhite" />
 
                         <RadioButton
@@ -116,8 +123,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
+                            android:textSize="13dp"
                             android:buttonTint="@color/colorWhite"
-                            android:text="Remember my Credentials for future logins"
+                            android:text="Remember logins"
                             android:textColor="@color/colorWhite" />
 
 
@@ -125,7 +133,7 @@
 
                     <Button
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_margin="10dp"
                         android:background="@drawable/rounded_button"
                         android:onClick="NavigateToMainInterface"

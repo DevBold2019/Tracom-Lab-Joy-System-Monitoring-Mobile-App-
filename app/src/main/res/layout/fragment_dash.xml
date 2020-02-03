@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="30dp"
-    android:id="@+id/dashboard"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.DashFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,43 +13,47 @@
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
-            android:id="@+id/card1"
-            app:cardBackgroundColor="#87CEFA"
+            app:cardBackgroundColor="#22146A"
+            app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:cardCornerRadius="10dp">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:gravity="center"
+                android:padding="20dp">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:padding="8dp"
-                    android:textStyle="bold"
                     android:id="@+id/onboardedDevices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=""/>
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:padding="8dp"
-                    android:textStyle="bold"
-                    android:textColor="#fff"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text="Onboarded devices"/>
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="Onboarded devices"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -57,53 +61,54 @@
         </androidx.cardview.widget.CardView>
 
 
-
         <androidx.cardview.widget.CardView
+            android:id="@+id/card2"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
-            android:id="@+id/card2"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:cardCornerRadius="10dp">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:padding="20dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:padding="8dp"
                     android:id="@+id/ReceivedDevices"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=""/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="Received devices"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:padding="8dp"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:text="Received devices"/>
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
 
 
         </androidx.cardview.widget.CardView>
-
 
 
         <androidx.cardview.widget.CardView
@@ -111,89 +116,94 @@
             android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="#FFA500"
+            app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card1"
-            app:cardCornerRadius="10dp">
+            app:layout_constraintTop_toBottomOf="@+id/card1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:padding="8dp"
-                    android:textStyle="bold"
                     android:id="@+id/ShippedDevices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=""/>
+
+                    android:text=""
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="Shipped devices"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:padding="8dp"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:text="Shipped devices"/>
-
-
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
-
 
 
         </androidx.cardview.widget.CardView>
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card4"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
-            android:id="@+id/card4"
             app:cardBackgroundColor="#38c172"
+            app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
-          app:layout_constraintTop_toBottomOf="@id/card2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:cardCornerRadius="10dp">
+            app:layout_constraintTop_toBottomOf="@id/card2">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:padding="8dp"
-                    android:gravity="center"
                     android:id="@+id/RepairedDevices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=""/>
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="Repaired devices"
+                    android:textAlignment="center"
                     android:textColor="#fff"
                     android:textStyle="bold"
-                    android:padding="8dp"
-                    android:textAlignment="center"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:text="Repaired devices"/>
-
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </LinearLayout>
@@ -202,53 +212,51 @@
         </androidx.cardview.widget.CardView>
 
 
-
-
-
         <androidx.cardview.widget.CardView
+            android:id="@+id/delivered"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
             app:cardBackgroundColor="#3490dc"
-            android:id="@+id/delivered"
+            app:cardCornerRadius="10dp"
             app:cardElevation="6dp"
-            app:layout_constraintTop_toBottomOf="@id/card4"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:cardCornerRadius="10dp">
+            app:layout_constraintTop_toBottomOf="@id/card4">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:padding="8dp"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
                     android:id="@+id/DeliveredDevice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=""/>
+                    android:text=""
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:padding="8dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text=" Delivered device"/>
-
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text=" Delivered device"
+                    android:textAlignment="center"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -258,40 +266,34 @@
 
 
         <TextView
+            android:id="@+id/labelRepair"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="10dp"
+            android:padding="8dp"
+            android:text="Repair Levels"
             android:textAlignment="center"
-            android:id="@+id/labelRepair"
             android:textColor="#000"
             android:textStyle="bold"
-            android:padding="8dp"
-            android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/delivered"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:text="Repair Levels"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/delivered" />
 
 
         <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/summaryPie"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/summaryPie"
             android:layout_margin="20dp"
-           app:layout_constraintTop_toBottomOf="@+id/labelRepair"/>
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/labelRepair" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
-
-
-        </ScrollView>
+</ScrollView>
 
 
 

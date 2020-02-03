@@ -231,10 +231,12 @@ public class RepairFragment extends Fragment {
                                 textCustomer.setTextColor(getResources().getColor(R.color.colorWhite));
                                 textCustomer.setBackgroundResource(R.drawable.cellrowheader);
                                 textCustomer.setGravity(Gravity.LEFT);
+                                textCustomer.setPadding(10,10,10,10);
                                 textCustomer.setText(deliveryList.getKey());
                                 tableRow.addView(textCustomer, 0);
 
                                 TextView textm = new TextView(getContext());
+                                textm.setPadding(10,10,10,10);
                                 textm.setTextColor(getResources().getColor(R.color.colorWhite));
                                 textm.setBackgroundResource(R.drawable.cellrowheader);
                                 textm.setGravity(Gravity.RIGHT);
@@ -252,6 +254,7 @@ public class RepairFragment extends Fragment {
                                 String delv = Integer.toString(deliveryList.getValue());
 
                                 TextView textCustomer = new TextView(getContext());
+                                textCustomer.setPadding(10,10,10,10);
                                 textCustomer.setTextColor(getResources().getColor(R.color.colorBackground));
                                 textCustomer.setBackgroundResource(R.drawable.cellrowbody);
                                 textCustomer.setGravity(Gravity.LEFT);
@@ -259,6 +262,7 @@ public class RepairFragment extends Fragment {
                                 tableRow.addView(textCustomer, 0);
 
                                 TextView Count = new TextView(getContext());
+                                Count.setPadding(10,10,10,10);
                                 Count.setTextColor(getResources().getColor(R.color.colorBackground));
                                 Count.setBackgroundResource(R.drawable.cellrowbody);
                                 Count.setGravity(Gravity.RIGHT);
