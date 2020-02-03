@@ -18,6 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -166,8 +167,20 @@ public class MainActivity extends Activity {
 
 
                 }else if(response.code() == 400){
-                    progressDialog.setMessage("wrong username or email");
-                    progressDialog.dismiss();
+
+                    Handler handler=new Handler();
+
+                    handler.postDelayed(new Runnable() {
+
+                        @RequiresApi(api = Build.VERSION_CODES.M)
+                        @Override
+                        public void run() {
+                            progressDialog.dismiss();
+                        }
+                    },1000);
+
+                    progressDialog.setMessage("wrong email or password");
+
 
 
                 } else {
