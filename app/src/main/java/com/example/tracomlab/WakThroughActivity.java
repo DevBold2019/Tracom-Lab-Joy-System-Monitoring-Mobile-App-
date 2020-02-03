@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tracomlab.Adapters.WalkAdapter;
 import com.example.tracomlab.Model_Classes.Walk_Model;
@@ -45,10 +46,6 @@ public class WakThroughActivity extends AppCompatActivity {
 
        button.setAnimation(bottomAnimation);
 
-
-
-
-
         // when this activity is about to be launch we need to check if its opened before or not
         if (getData()) {
             Intent mainActivity = new Intent(WakThroughActivity.this, SplashActivity.class);
@@ -60,13 +57,69 @@ public class WakThroughActivity extends AppCompatActivity {
         list=new ArrayList<>();
 
         list.add(new Walk_Model("Monitoring", "Keep close Track of Pos Terminals ", R.drawable.monitor));
-        list.add(new Walk_Model("Searching", "Searching has been made Easy with the app", R.drawable.merchant));
-        list.add(new Walk_Model("Accurate", "Labcom provides latest Data from the Database", R.drawable.server));
+        list.add(new Walk_Model("Searching", "Searching of POS terminals \n has been made Easy with the app", R.drawable.merchant));
+        list.add(new Walk_Model("Accuracy ", "Labcom provides Accurate Data from the Database", R.drawable.server));
 
         WalkAdapter walkAdapter = new WalkAdapter(list,WakThroughActivity.this);
         viewPager.setAdapter(walkAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
+        //immediately the page reaches the end it skips to the lastPage
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                if (tab.getPosition() == list.size() - 1) {
+
+                    tabLayout.setSelectedTabIndicator(R.drawable.rounded_button);
+                    lastPage();
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        WalkThroughTransition();
+
+    }
+
+    //Parameters for last Page when loaded
+    public void lastPage(){
+
+        button1.setAnimation(topAnimation);
+        button1.setVisibility(View.VISIBLE);
+        button.setVisibility(View.INVISIBLE);
+        textView.setVisibility(View.INVISIBLE);
+
+    }
+    //saving the swipes so that the user doesn't have to go through it again
+    public  void savedata(){
+
+        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("loadPage",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putBoolean("SavePage",true);
+        editor.commit();
+
+    }
+    //check if the user has passed this welcome guide
+    public  Boolean getData() {
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("loadPage", MODE_PRIVATE);
+        Boolean isPageOpen = sharedPreferences.getBoolean("SavePage", false);
+
+        return isPageOpen;
+
+    }
+
+    public void WalkThroughTransition(){
 
         //GetStarted Button
         button1.setOnClickListener(new View.OnClickListener() {
@@ -104,62 +157,27 @@ public class WakThroughActivity extends AppCompatActivity {
                 }
             }
         });
-        //immediately the page reaches the end it skips to the lastPage
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-                if (tab.getPosition() == list.size() - 1) {
-
-                    tabLayout.setSelectedTabIndicator(R.drawable.rounded_button);
-                    lastPage();
-                }
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-    }
-
-    public void load(View view) {
-
-    }
-
-    public void lastPage(){
-
-        button1.setAnimation(topAnimation);
-        button1.setVisibility(View.VISIBLE);
-        button.setVisibility(View.INVISIBLE);
-        textView.setVisibility(View.INVISIBLE);
-
-    }
-    //saving the swipes
-    public  void savedata(){
-
-        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("loadPage",MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putBoolean("SavePage",true);
-        editor.commit();
-
-    }
-    //check if the user has passed this welcome guide
-    public  Boolean getData() {
-
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("loadPage", MODE_PRIVATE);
-        Boolean isPageOpen = sharedPreferences.getBoolean("SavePage", false);
-
-        return isPageOpen;
-
 
 
     }
 
+    //Skip TextView for skipping to the last Page
+    public void skip(View view) {
+
+        int position ;
+        //getting position of the current Image
+        position = viewPager.getCurrentItem();
+        //if position is less than maximum of the tabs we go to next
+        if (position < list.size()) {
+
+            int goTo= list.size()-1;
+            viewPager.setCurrentItem(goTo);
+            lastPage();
+
+            return;
+        }
+
+        lastPage();
+
+    }
 }
